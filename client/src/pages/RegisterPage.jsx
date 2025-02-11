@@ -82,6 +82,7 @@ export default function RegisterPage() {
                 onChange={handleChangeInput}
                 name="password"
                 id="password"
+                type="password"
                 placeholder="Enter your password"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />

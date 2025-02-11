@@ -1,6 +1,51 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { auth } from "../config/firebase";
 
 export default function LoginPage() {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const handleSubmitLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        input.email,
+        input.password
+      );
+      navigate("/");
+      toast.success("Register Success");
+    } catch (error) {
+      console.log(error.message, "<<<<<<");
+      switch (error.message) {
+        case "Firebase: Error (auth/invalid-email).":
+          toast.error("Invalid Email");
+          return;
+        case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+          toast.error("Password should be at least 6 characters");
+          return;
+        case "Firebase: Error (auth/email-already-in-use).":
+          toast.error("email/password already in use");
+          return;
+
+        default:
+          return;
+      }
+    }
+  };
   const navigate = useNavigate();
   return (
     <div className="flex h-screen">
@@ -14,12 +59,14 @@ export default function LoginPage() {
             Sign in to continue
           </p>
 
-          <form className="space-y-4">
+          <form onSubmit={handleSubmitLogin} className="space-y-4">
             {/* Email Input */}
             <div>
               <label className="block text-gray-600 font-medium">Email</label>
               <input
-                type="email"
+                onChange={handleChangeInput}
+                name="email"
+                id="email"
                 placeholder="Enter your email"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -31,6 +78,9 @@ export default function LoginPage() {
                 Password
               </label>
               <input
+                onChange={handleChangeInput}
+                name="password"
+                id="password"
                 type="password"
                 placeholder="Enter your password"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
