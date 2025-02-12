@@ -26,7 +26,7 @@ export default function LoginPage() {
         input.email,
         input.password
       );
-      navigate("/");
+      navigate("/admin");
       toast.success("Register Success");
     } catch (error) {
       console.log(error.message, "<<<<<<");
@@ -49,7 +49,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
   return (
     <div className="flex h-screen">
-      {/* Bagian Kiri: Form Login */}
       <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50">
         <div className="w-[400px] p-8 shadow-lg rounded-lg bg-white">
           <h2 className="text-2xl font-bold text-center text-gray-700">
@@ -107,7 +106,6 @@ export default function LoginPage() {
             <p className="text-sm text-center text-gray-500">
               Don't have an account?{" "}
               <a
-                href="#"
                 className="text-blue-600 hover:underline"
                 onClick={() => navigate("/register")}
               >
@@ -118,7 +116,6 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Bagian Kanan: Gambar */}
       <div className="hidden md:flex w-1/2 items-center justify-center bg-blue-600">
         <img
           src="https://www.zdnet.com/a/img/resize/de94db9b4efb59fc897889ac6e76401a16910a5c/2023/11/02/21c11e8e-fa82-4ad8-8090-54f77e1e873e/iphone-15-and-iphone-15-plus-in-hand.jpg?auto=webp&fit=crop&height=1200&width=1200"

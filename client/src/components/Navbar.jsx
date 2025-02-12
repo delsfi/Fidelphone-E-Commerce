@@ -1,7 +1,20 @@
+import { signOut } from "firebase/auth";
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { auth } from "../config/firebase";
 
 export default function Navbar () {
     const navigate = useNavigate();
+    const handleLogout = async () => {
+      try {
+        await signOut(auth);
+        navigate("/login");
+        toast.success("Logout Success");
+      } catch (error) {
+        console.log(error);
+        
+      }
+    };
   return (
     <nav className="w-full bg-white shadow-md px-6 py-4 flex justify-between items-center">
       {/* Logo */}
@@ -14,6 +27,9 @@ export default function Navbar () {
       onClick={() => navigate("/login")}>Sign In</button>
       <button className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
       onClick={() => navigate("/register")}>Sign Up</button>
+      <button className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
+      onClick={handleLogout}>Logout</button>
+      
       </div>
     </nav>
   );
