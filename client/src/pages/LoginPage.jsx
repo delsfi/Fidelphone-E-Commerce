@@ -1,10 +1,21 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
 
 export default function LoginPage() {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/admin");
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -27,15 +38,15 @@ export default function LoginPage() {
         input.password
       );
       navigate("/admin");
-      toast.success("Register Success");
+      toast.success("Login Success");
     } catch (error) {
       console.log(error.message, "<<<<<<");
       switch (error.message) {
         case "Firebase: Error (auth/invalid-email).":
           toast.error("Invalid Email");
           return;
-        case "Firebase: Password should be at least 6 characters (auth/weak-password).":
-          toast.error("Password should be at least 6 characters");
+        case "Firebase: Error (auth/invalid-credential).":
+          toast.error("Invalid Email/password");
           return;
         case "Firebase: Error (auth/email-already-in-use).":
           toast.error("email/password already in use");
@@ -118,7 +129,7 @@ export default function LoginPage() {
 
       <div className="hidden md:flex w-1/2 items-center justify-center bg-blue-600">
         <img
-          src="https://www.zdnet.com/a/img/resize/de94db9b4efb59fc897889ac6e76401a16910a5c/2023/11/02/21c11e8e-fa82-4ad8-8090-54f77e1e873e/iphone-15-and-iphone-15-plus-in-hand.jpg?auto=webp&fit=crop&height=1200&width=1200"
+          src="https://cdn.antaranews.com/cache/1200x800/2023/02/11/Apple-iPhone-14-iPhone-14-Plus-hero-220907_Full-Bleed-Image.jpg.xlarge.jpg"
           alt=""
           className="object-cover w-full h-full"
         />
