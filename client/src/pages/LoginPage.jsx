@@ -93,7 +93,7 @@ export default function LoginPage() {
             </div>
 
             {/* Password Input */}
-            <div>
+            <div className="pb-5">
               <label className="block text-gray-600 font-medium">
                 Password
               </label>
@@ -106,20 +106,9 @@ export default function LoginPage() {
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-
-            {/* Remember Me & Forgot Password */}
-            <div className="flex justify-between text-sm text-gray-500">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-blue-600" />
-                Remember me
-              </label>
-              <a href="#" className="text-blue-600 hover:underline">
-                Forgot password?
-              </a>
-            </div>
-
+      
             {/* Button Login */}
-            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition cursor-pointer">
               Sign In
             </button>
 
@@ -127,8 +116,8 @@ export default function LoginPage() {
             <p className="text-sm text-center text-gray-500">
               Don't have an account?{" "}
               <a
-                className="text-blue-600 hover:underline"
-                onClick={() => navigate("/register")}
+                className="text-blue-600 hover:underline cursor-pointer"
+                onClick={() => navigate("/admin/register")}
               >
                 Sign up
               </a>

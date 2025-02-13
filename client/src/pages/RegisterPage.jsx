@@ -27,7 +27,7 @@ export default function RegisterPage() {
         input.email,
         input.password
       );
-      navigate("/login");
+      navigate("/admin/login");
       toast.success("Register Success");
     } catch (error) {
       switch (error.message) {
@@ -107,8 +107,8 @@ export default function RegisterPage() {
               />
             </div>
 
-            {/* Button Login */}
-            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+            {/* Button register */}
+            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition cursor-pointer">
               Create Account
             </button>
 
@@ -116,9 +116,8 @@ export default function RegisterPage() {
             <p className="text-sm text-center text-gray-500">
               All Ready a member?{" "}
               <a
-                href="#"
-                className="text-blue-600 hover:underline"
-                onClick={() => navigate("/login")}
+                className="text-blue-600 hover:underline cursor-pointer"
+                onClick={() => navigate("/admin/login")}
               >
                 Login
               </a>
