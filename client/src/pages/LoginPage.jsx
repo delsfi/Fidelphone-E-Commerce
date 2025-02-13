@@ -1,20 +1,12 @@
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
+import AdminPage from "./AdminPage";
+import { AdminContext } from "./AdminLayout";
 
 export default function LoginPage() {
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/admin");
-      }
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   const [input, setInput] = useState({
     email: "",
@@ -58,6 +50,24 @@ export default function LoginPage() {
     }
   };
   const navigate = useNavigate();
+  const stateContext = useContext(AdminContext);
+
+  // route protection
+  useEffect(() => {
+    if (!stateContext.loading) {
+      if (stateContext.userLogin) {
+        navigate("/admin");
+      }
+    }
+  }, [navigate, stateContext]);
+
+  if (stateContext.loading) {
+    return (
+      <>
+        <div>Loading...</div>
+      </>
+    );
+  }
   return (
     <div className="flex h-screen">
       <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50">

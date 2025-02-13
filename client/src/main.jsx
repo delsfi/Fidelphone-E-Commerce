@@ -6,19 +6,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
+import Dashboard from './pages/AdminLayout.jsx';
+import AdminLayout from './pages/AdminLayout.jsx';
 
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path: "/admin",
+    element: <AdminLayout />,
     children: [
       { path: "/admin", element: <AdminPage /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/register", element: <RegisterPage /> },
+      { path: "/admin/login", element: <LoginPage /> },
+      { path: "/admin/register", element: <RegisterPage /> },
 
     ],
   },
+  
 ]);
 
 createRoot(document.getElementById('root')).render(

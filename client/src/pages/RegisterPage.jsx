@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { toast } from "react-toastify";
+import { AdminContext } from "./AdminLayout";
 
 export default function RegisterPage() {
   const [input, setInput] = useState({
@@ -48,6 +49,24 @@ export default function RegisterPage() {
   };
 
   const navigate = useNavigate();
+  const stateContext = useContext(AdminContext);
+
+  // route protection
+  useEffect(() => {
+    if (!stateContext.loading) {
+      if (stateContext.userLogin) {
+        navigate("/admin");
+      }
+    }
+  }, [navigate, stateContext]);
+
+  if (stateContext.loading) {
+    return (
+      <>
+        <div>Loading...</div>
+      </>
+    );
+  }
   return (
     <div className="flex h-screen">
       {/* Bagian Kiri: Form Login */}

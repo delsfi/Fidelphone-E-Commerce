@@ -8,7 +8,7 @@ export default function Navbar () {
     const handleLogout = async () => {
       try {
         await signOut(auth);
-        navigate("/login");
+        navigate("/admin/login");
         toast.success("Logout Success");
       } catch (error) {
         console.log(error);
@@ -24,9 +24,9 @@ export default function Navbar () {
       {/* Menu */}
       <div className="flex gap-4">
       <button className="px-4 py-2 text-blue-600 cursor-pointer"
-      onClick={() => navigate("/login")}>Sign In</button>
+      onClick={() => navigate("/admin/login")}>Sign In</button>
       <button className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
-      onClick={() => navigate("/register")}>Sign Up</button>
+      onClick={() => navigate("/admin/register")}>Sign Up</button>
       <button className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
       onClick={handleLogout}>Logout</button>
       
