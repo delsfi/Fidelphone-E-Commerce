@@ -5,13 +5,14 @@ import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
 import AdminPage from "./AdminPage";
 import { AdminContext } from "./AdminLayout";
-
+import { EyeClosed, Eye, LoaderCircle } from "lucide-react";
 export default function LoginPage() {
-
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [isShowPass, setIsShowPass] = useState(false);
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -23,6 +24,7 @@ export default function LoginPage() {
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -47,6 +49,8 @@ export default function LoginPage() {
         default:
           return;
       }
+    } finally {
+      setLoading(false);
     }
   };
   const navigate = useNavigate();
@@ -97,19 +101,34 @@ export default function LoginPage() {
               <label className="block text-gray-600 font-medium">
                 Password
               </label>
-              <input
-                onChange={handleChangeInput}
-                name="password"
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
+              <div className="relative">
+                <input
+                  onChange={handleChangeInput}
+                  name="password"
+                  id="password"
+                  type={isShowPass ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                    stateContext?.theme ? "border-black" : "border-gray-300"
+                  }`}
+                />
+                <div
+                  onClick={() => setIsShowPass(!isShowPass)}
+                  role="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
+                >
+                  {isShowPass ? <EyeClosed /> : <Eye />}
+                </div>
+              </div>
             </div>
-      
+
             {/* Button Login */}
-            <button className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition cursor-pointer">
-              Sign In
+            <button
+              type="submit"
+              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition cursor-pointer flex justify-center items-center "
+            >
+              {loading && <LoaderCircle className="animate-spin" />}
+              {!loading && <p>Sign In</p>}
             </button>
 
             {/* Register Link */}

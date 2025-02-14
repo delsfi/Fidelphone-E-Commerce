@@ -4,12 +4,16 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { toast } from "react-toastify";
 import { AdminContext } from "./AdminLayout";
+import { Eye, EyeClosed, LoaderCircle } from "lucide-react";
 
 export default function RegisterPage() {
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
+  const [isShowPass, setIsShowPass] = useState(false);
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -21,6 +25,7 @@ export default function RegisterPage() {
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -37,7 +42,7 @@ export default function RegisterPage() {
         case "Firebase: Password should be at least 6 characters (auth/weak-password).":
           toast.error("Password should be at least 6 characters");
           return;
-          case "Firebase: Error (auth/email-already-in-use).":
+        case "Firebase: Error (auth/email-already-in-use).":
           toast.error("email/password already in use");
           return;
 
@@ -93,23 +98,38 @@ export default function RegisterPage() {
             </div>
 
             {/* Password Input */}
-            <div>
+            <div className="pb-5">
               <label className="block text-gray-600 font-medium">
                 Password
               </label>
-              <input
-                onChange={handleChangeInput}
-                name="password"
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
+              <div className="relative">
+                <input
+                  onChange={handleChangeInput}
+                  name="password"
+                  id="password"
+                  type={isShowPass ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                    stateContext?.theme ? "border-black" : "border-gray-300"
+                  }`}
+                />
+                <div
+                  onClick={() => setIsShowPass(!isShowPass)}
+                  role="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
+                >
+                  {isShowPass ? <EyeClosed /> : <Eye />}
+                </div>
+              </div>
             </div>
 
             {/* Button register */}
-            <button className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition cursor-pointer">
-              Create Account
+            <button
+              type="submit"
+              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition cursor-pointer flex justify-center items-center "
+            >
+              {loading && <LoaderCircle className="animate-spin" />}
+              {!loading && <p>Sign In</p>}
             </button>
 
             {/* Register Link */}
