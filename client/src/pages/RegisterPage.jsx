@@ -88,7 +88,7 @@ export default function RegisterPage() {
                 name="email"
                 id="email"
                 placeholder="Enter your email"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
 
@@ -103,12 +103,12 @@ export default function RegisterPage() {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
 
             {/* Button register */}
-            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition cursor-pointer">
+            <button className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition cursor-pointer">
               Create Account
             </button>
 
@@ -116,7 +116,7 @@ export default function RegisterPage() {
             <p className="text-sm text-center text-gray-500">
               All Ready a member?{" "}
               <a
-                className="text-blue-600 hover:underline cursor-pointer"
+                className="text-red-600 hover:underline cursor-pointer"
                 onClick={() => navigate("/admin/login")}
               >
                 Login

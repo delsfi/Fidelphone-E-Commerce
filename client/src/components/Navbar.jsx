@@ -21,7 +21,7 @@ export default function Navbar() {
     <nav className="w-full bg-white shadow-md px-6 py-4 flex justify-between items-center">
       {/* Logo */}
       <div
-        className="text-2xl font-bold text-blue-600 cursor-pointer"
+        className="text-2xl font-bold text-red-600 cursor-pointer"
         onClick={() => navigate("/admin")}
       >
         MyLogo
@@ -32,13 +32,13 @@ export default function Navbar() {
         {!stateContext.userLogin && (
           <>
             <button
-              className="px-4 py-2 text-blue-600 cursor-pointer"
+              className="px-4 py-2 text-red-600 cursor-pointer hover:underline"
               onClick={() => navigate("/admin/login")}
             >
               Sign In
             </button>
             <button
-              className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
+              className="px-4 py-2 bg-red-600 text-white rounded-md cursor-pointer"
               onClick={() => navigate("/admin/register")}
             >
               Sign Up
@@ -47,9 +47,9 @@ export default function Navbar() {
         )}
         {stateContext.userLogin && (
           <>
-            <p>Hi, {stateContext.userLogin.email}</p>
+            <p className="pt-2">Hi, {stateContext.userLogin.email}</p>
             <button
-              className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
               onClick={handleLogout}
             >
               Logout

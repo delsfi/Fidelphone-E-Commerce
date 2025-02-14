@@ -88,7 +88,7 @@ export default function LoginPage() {
                 name="email"
                 id="email"
                 placeholder="Enter your email"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
 
@@ -103,12 +103,12 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
       
             {/* Button Login */}
-            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition cursor-pointer">
+            <button className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition cursor-pointer">
               Sign In
             </button>
 
@@ -116,7 +116,7 @@ export default function LoginPage() {
             <p className="text-sm text-center text-gray-500">
               Don't have an account?{" "}
               <a
-                className="text-blue-600 hover:underline cursor-pointer"
+                className="text-red-600 hover:underline cursor-pointer"
                 onClick={() => navigate("/admin/register")}
               >
                 Sign up
@@ -126,9 +126,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div className="hidden md:flex w-1/2 items-center justify-center bg-blue-600">
+      <div className="hidden md:flex w-1/2 items-center justify-center">
         <img
-          src="https://cdn.antaranews.com/cache/1200x800/2023/02/11/Apple-iPhone-14-iPhone-14-Plus-hero-220907_Full-Bleed-Image.jpg.xlarge.jpg"
+          src="https://awsimages.detik.net.id/visual/2023/09/22/apple-china_169.jpeg?w=650&q=80"
           alt=""
           className="object-cover w-full h-full"
         />
