@@ -15,8 +15,16 @@ export default function AdminPage() {
   }, [navigate]);
 
   return (
+    <div className={`relative flex h-screen justify-center items-center bg-cover bg-center ${stateContext.theme ? "bg-gray-100" : "bg-gray-900 text-white"}`}
+    style={{
+      backgroundImage: `url('https://cdn.mos.cms.futurecdn.net/yFVTwgKyQ3uuEf4DRx6imK-1200-80.jpg')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed',
+    }}>
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl font-bold">Dashboard</h1>
+      <h1 className="text-4xl font-bold text-white">Dashboard</h1>
+    </div>
     </div>
   );
 }

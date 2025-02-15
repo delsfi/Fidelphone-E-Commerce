@@ -12,7 +12,7 @@ import AdminLayout from './pages/AdminLayout.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/admin",
+    path: "/",
     element: <AdminLayout />,
     children: [
       { path: "/admin", element: <AdminPage /> },
