@@ -3,9 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
-import AdminPage from "./AdminPage";
 import { AdminContext } from "./AdminLayout";
 import { EyeClosed, Eye, LoaderCircle } from "lucide-react";
+
 export default function LoginPage() {
   const [input, setInput] = useState({
     email: "",
@@ -13,6 +13,9 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
+
+  const navigate = useNavigate();
+  const stateContext = useContext(AdminContext);
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -26,79 +29,74 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        input.email,
-        input.password
-      );
+      await signInWithEmailAndPassword(auth, input.email, input.password);
       navigate("/admin");
       toast.success("Login Success");
     } catch (error) {
-      console.log(error.message, "<<<<<<");
+      console.log(error.message);
       switch (error.message) {
         case "Firebase: Error (auth/invalid-email).":
           toast.error("Invalid Email");
-          return;
+          break;
         case "Firebase: Error (auth/invalid-credential).":
           toast.error("Invalid Email/password");
-          return;
+          break;
         case "Firebase: Error (auth/email-already-in-use).":
-          toast.error("email/password already in use");
-          return;
-
+          toast.error("Email already in use");
+          break;
         default:
-          return;
+          toast.error("Login Failed");
+          break;
       }
     } finally {
       setLoading(false);
     }
   };
-  const navigate = useNavigate();
-  const stateContext = useContext(AdminContext);
 
-  // route protection
+  // Route protection
   useEffect(() => {
-    if (!stateContext.loading) {
-      if (stateContext.userLogin) {
-        navigate("/admin");
-      }
+    if (!stateContext.loading && stateContext.userLogin) {
+      navigate("/admin");
     }
   }, [navigate, stateContext]);
 
   if (stateContext.loading) {
     return (
-      <>
-        <div>Loading...</div>
-      </>
+      <div className="flex h-screen justify-center items-center bg-gray-100 dark:bg-gray-900">
+        <LoaderCircle className="animate-spin text-red-600 dark:text-white" size={40} />
+      </div>
     );
   }
+
   return (
-    <div className="flex h-screen">
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50">
-        <div className="w-[400px] p-8 shadow-lg rounded-lg bg-white">
-          <h2 className="text-2xl font-bold text-center text-gray-700">
+    <div className={`flex h-screen ${stateContext.theme ? "bg-gray-100" : "bg-gray-900 text-white"}`}>
+      <div className="w-full flex items-center justify-center">
+        <div className={`w-[400px] p-8 shadow-lg rounded-lg ${stateContext.theme ? "bg-white" : "bg-gray-800"}`}>
+          <h2 className="text-2xl font-bold text-center">
             Login
           </h2>
-          <p className="text-sm text-gray-500 text-center mb-6">
+          <p className="text-sm text-center mb-6">
             Sign in to continue
           </p>
 
           <form onSubmit={handleSubmitLogin} className="space-y-4">
             {/* Email Input */}
             <div>
-              <label className="block text-gray-600 font-medium">Email</label>
+              <label className="block font-medium">Email</label>
               <input
                 onChange={handleChangeInput}
                 name="email"
                 id="email"
                 placeholder="Enter your email"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                  stateContext.theme ? "border-gray-300" : "border-gray-600 bg-gray-700 text-white"
+                }`}
               />
             </div>
 
             {/* Password Input */}
             <div className="pb-5">
-              <label className="block text-gray-600 font-medium">
+              <label className="block font-medium">
                 Password
               </label>
               <div className="relative">
@@ -109,13 +107,13 @@ export default function LoginPage() {
                   type={isShowPass ? "text" : "password"}
                   placeholder="Enter your password"
                   className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                    stateContext?.theme ? "border-black" : "border-gray-300"
+                    stateContext.theme ? "border-gray-300" : "border-gray-600 bg-gray-700 text-white"
                   }`}
                 />
                 <div
                   onClick={() => setIsShowPass(!isShowPass)}
                   role="button"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                 >
                   {isShowPass ? <EyeClosed /> : <Eye />}
                 </div>
@@ -125,14 +123,13 @@ export default function LoginPage() {
             {/* Button Login */}
             <button
               type="submit"
-              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition cursor-pointer flex justify-center items-center "
+              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition flex justify-center items-center"
             >
-              {loading && <LoaderCircle className="animate-spin" />}
-              {!loading && <p>Sign In</p>}
+              {loading ? <LoaderCircle className="animate-spin" /> : <p>Sign In</p>}
             </button>
 
             {/* Register Link */}
-            <p className="text-sm text-center text-gray-500">
+            <p className="text-sm text-center">
               Don't have an account?{" "}
               <a
                 className="text-red-600 hover:underline cursor-pointer"
@@ -143,14 +140,6 @@ export default function LoginPage() {
             </p>
           </form>
         </div>
-      </div>
-
-      <div className="hidden md:flex w-1/2 items-center justify-center">
-        <img
-          src="https://awsimages.detik.net.id/visual/2023/09/22/apple-china_169.jpeg?w=650&q=80"
-          alt=""
-          className="object-cover w-full h-full"
-        />
       </div>
     </div>
   );
