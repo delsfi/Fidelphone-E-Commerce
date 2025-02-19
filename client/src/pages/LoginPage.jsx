@@ -50,7 +50,6 @@ export default function LoginPage() {
   const HandleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-
     } catch (error) {
       console.log(error);
     }
@@ -173,8 +172,28 @@ export default function LoginPage() {
             {loading ? <LoaderCircle className="animate-spin" /> : "Sign In"}
           </button>
 
-          {/* Register */}
-          <p
+          
+        </form>
+        {/* Button */}
+        <div className="flex items-center w-full pt-3">
+          <button
+            onClick={HandleGoogleLogin}
+            className="w-full bg-gray-100 text-slate-800 py-3 px-2 rounded-lg hover:bg-gray-200 transition flex justify-center items-center gap-3 cursor-pointer"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
+              alt="google"
+              className="w-6 h-6"
+            />
+            {loading ? (
+              <LoaderCircle className="animate-spin" />
+            ) : (
+              "Sign In With Google"
+            )}
+          </button>
+        </div>
+        {/* Register */}
+        <p
             className={`text-sm text-center ${
               stateContext.theme ? "text-gray-600" : "text-gray-400"
             }`}
@@ -187,14 +206,6 @@ export default function LoginPage() {
               Sign up
             </span>
           </p>
-        </form>
-        {/* Button */}
-        <button
-            onClick={HandleGoogleLogin}
-            className="w-full bg-slate-600 text-white py-3 rounded-lg hover:bg-slate-500 transition flex justify-center items-center cursor-pointer"
-          >
-            {loading ? <LoaderCircle className="animate-spin" /> : "Sign In With Google"}
-          </button>
       </div>
     </div>
   );
