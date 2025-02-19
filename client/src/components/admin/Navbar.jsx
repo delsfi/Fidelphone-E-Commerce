@@ -1,8 +1,8 @@
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { auth } from "../config/firebase";
-import { AdminContext } from "../pages/AdminLayout";
+import { auth } from "../../config/firebase";
+import { AdminContext } from "../../pages/admin/AdminLayout";
 import { useContext } from "react";
 import { Moon, Sun } from "lucide-react";
 

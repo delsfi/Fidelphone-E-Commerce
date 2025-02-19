@@ -1,7 +1,7 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/admin/Navbar";
 import { Outlet } from "react-router-dom";
 
 export const AdminContext = createContext(null);

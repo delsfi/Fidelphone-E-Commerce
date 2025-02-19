@@ -1,12 +1,12 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase";
 import { toast } from "react-toastify";
-import { EyeClosed, Eye, LoaderCircle } from "lucide-react";
-import { auth, provider } from "../config/firebase";
 import { AdminContext } from "./AdminLayout";
+import { Eye, EyeClosed, LoaderCircle } from "lucide-react";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [input, setInput] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
@@ -19,39 +19,29 @@ export default function LoginPage() {
     setInput({ ...input, [name]: value });
   };
 
-  const handleSubmitLogin = async (e) => {
+  const handleSubmitRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, input.email, input.password);
-      navigate("/admin");
-      toast.success("Login Success");
+      await createUserWithEmailAndPassword(auth, input.email, input.password);
+      navigate("/admin/login");
+      toast.success("Register Success");
     } catch (error) {
-      console.log(error.message, "<<<<<<");
       switch (error.message) {
         case "Firebase: Error (auth/invalid-email).":
           toast.error("Invalid Email");
-          return;
-        case "Firebase: Error (auth/invalid-credential).":
-          toast.error("Invalid Email/password");
-          return;
+          break;
+        case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+          toast.error("Password should be at least 6 characters");
+          break;
         case "Firebase: Error (auth/email-already-in-use).":
-          toast.error("email/password already in use");
-          return;
-
+          toast.error("Email already in use");
+          break;
         default:
-          return;
+          console.log(error.message);
       }
     } finally {
       setLoading(false);
-    }
-  };
-
-  const HandleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -78,7 +68,7 @@ export default function LoginPage() {
       }`}
       style={{
         backgroundImage: `url('https://cdn.mos.cms.futurecdn.net/yFVTwgKyQ3uuEf4DRx6imK-1200-80.jpg')`,
-        backgroundSize: "fit",
+        backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
       }}
@@ -97,17 +87,17 @@ export default function LoginPage() {
             stateContext.theme ? "text-gray-800" : "text-white"
           }`}
         >
-          Welcome
+          Create an Account
         </h2>
         <p
           className={`text-sm text-center mb-6 ${
             stateContext.theme ? "text-gray-500" : "text-gray-300"
           }`}
         >
-          Sign in to your account
+          Sign up to get started
         </p>
 
-        <form onSubmit={handleSubmitLogin} className="space-y-5">
+        <form onSubmit={handleSubmitRegister} className="space-y-5">
           {/* Email */}
           <div>
             <label
@@ -167,45 +157,26 @@ export default function LoginPage() {
           {/* Button */}
           <button
             type="submit"
-            className="w-full bg-slate-600 text-white py-3 rounded-lg hover:bg-slate-500 transition flex justify-center items-center cursor-pointer"
+            className="w-full bg-slate-600 text-white py-3 rounded-lg hover:bg-slate-700 transition flex justify-center items-center cursor-pointer"
           >
-            {loading ? <LoaderCircle className="animate-spin" /> : "Sign In"}
+            {loading ? <LoaderCircle className="animate-spin" /> : "Sign Up"}
           </button>
 
-          
-        </form>
-        {/* Button */}
-        <div className="flex items-center w-full pt-3">
-          <button
-            onClick={HandleGoogleLogin}
-            className="w-full bg-gray-100 text-slate-800 py-3 px-2 rounded-lg hover:bg-gray-200 transition flex justify-center items-center gap-3 cursor-pointer"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
-              alt="google"
-              className="w-6 h-6"
-            />
-            {loading ? (
-              <LoaderCircle className="animate-spin" />
-            ) : (
-              "Sign In With Google"
-            )}
-          </button>
-        </div>
-        {/* Register */}
-        <p
+          {/* Login Redirect */}
+          <p
             className={`text-sm text-center ${
               stateContext.theme ? "text-gray-600" : "text-gray-400"
             }`}
           >
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <span
               className="text-slate-500 hover:underline cursor-pointer"
-              onClick={() => navigate("/admin/register")}
+              onClick={() => navigate("/admin/login")}
             >
-              Sign up
+              Sign in
             </span>
           </p>
+        </form>
       </div>
     </div>
   );
