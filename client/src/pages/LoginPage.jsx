@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
 import { EyeClosed, Eye, LoaderCircle } from "lucide-react";
-import { auth } from "../config/firebase";
+import { auth, provider } from "../config/firebase";
 import { AdminContext } from "./AdminLayout";
 
 export default function LoginPage() {
@@ -47,6 +47,15 @@ export default function LoginPage() {
     }
   };
 
+  const HandleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (!stateContext.loading && stateContext.userLogin) {
       navigate("/admin");
@@ -65,30 +74,48 @@ export default function LoginPage() {
 
   return (
     <div
-      className={`relative flex h-screen justify-center items-center bg-cover bg-center ${stateContext.theme ? "bg-gray-100" : "bg-gray-900 text-white"}`}
+      className={`relative flex h-screen justify-center items-center bg-cover bg-center ${
+        stateContext.theme ? "bg-gray-100" : "bg-gray-900 text-white"
+      }`}
       style={{
         backgroundImage: `url('https://cdn.mos.cms.futurecdn.net/yFVTwgKyQ3uuEf4DRx6imK-1200-80.jpg')`,
-        backgroundSize: 'fit',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
+        backgroundSize: "fit",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
       }}
     >
       {/* Overlay */}
       <div className={`absolute inset-0 ${overlayColor}`} />
 
       {/* Content */}
-      <div className={`relative z-10 w-[400px] p-8 rounded-2xl shadow-2xl backdrop-blur-md ${stateContext.theme ? "bg-white" : "bg-gray-800/70"}`}>
-        <h2 className={`text-2xl font-bold text-center ${stateContext.theme ? "text-gray-800" : "text-white"}`}>
+      <div
+        className={`relative z-10 w-[400px] p-8 rounded-2xl shadow-2xl backdrop-blur-md ${
+          stateContext.theme ? "bg-white" : "bg-gray-800/70"
+        }`}
+      >
+        <h2
+          className={`text-2xl font-bold text-center ${
+            stateContext.theme ? "text-gray-800" : "text-white"
+          }`}
+        >
           Welcome
         </h2>
-        <p className={`text-sm text-center mb-6 ${stateContext.theme ? "text-gray-500" : "text-gray-300"}`}>
+        <p
+          className={`text-sm text-center mb-6 ${
+            stateContext.theme ? "text-gray-500" : "text-gray-300"
+          }`}
+        >
           Sign in to your account
         </p>
 
         <form onSubmit={handleSubmitLogin} className="space-y-5">
           {/* Email */}
           <div>
-            <label className={`block font-medium ${stateContext.theme ? "text-gray-700" : "text-gray-200"}`}>
+            <label
+              className={`block font-medium ${
+                stateContext.theme ? "text-gray-700" : "text-gray-200"
+              }`}
+            >
               Email
             </label>
             <input
@@ -105,7 +132,11 @@ export default function LoginPage() {
 
           {/* Password */}
           <div>
-            <label className={`block font-medium ${stateContext.theme ? "text-gray-700" : "text-gray-200"}`}>
+            <label
+              className={`block font-medium ${
+                stateContext.theme ? "text-gray-700" : "text-gray-200"
+              }`}
+            >
               Password
             </label>
             <div className="relative">
@@ -125,7 +156,11 @@ export default function LoginPage() {
                 role="button"
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
               >
-                {isShowPass ? <EyeClosed className="text-gray-400" /> : <Eye className="text-gray-400" />}
+                {isShowPass ? (
+                  <EyeClosed className="text-gray-400" />
+                ) : (
+                  <Eye className="text-gray-400" />
+                )}
               </div>
             </div>
           </div>
@@ -139,13 +174,27 @@ export default function LoginPage() {
           </button>
 
           {/* Register */}
-          <p className={`text-sm text-center ${stateContext.theme ? "text-gray-600" : "text-gray-400"}`}>
+          <p
+            className={`text-sm text-center ${
+              stateContext.theme ? "text-gray-600" : "text-gray-400"
+            }`}
+          >
             Don't have an account?{" "}
-            <span className="text-slate-500 hover:underline cursor-pointer" onClick={() => navigate("/admin/register")}>
+            <span
+              className="text-slate-500 hover:underline cursor-pointer"
+              onClick={() => navigate("/admin/register")}
+            >
               Sign up
             </span>
           </p>
         </form>
+        {/* Button */}
+        <button
+            onClick={HandleGoogleLogin}
+            className="w-full bg-slate-600 text-white py-3 rounded-lg hover:bg-slate-500 transition flex justify-center items-center cursor-pointer"
+          >
+            {loading ? <LoaderCircle className="animate-spin" /> : "Sign In With Google"}
+          </button>
       </div>
     </div>
   );
