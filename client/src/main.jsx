@@ -1,15 +1,14 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.jsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminLayout from './pages/admin/AdminLayout.jsx';
-import AdminPage from './pages/admin/AdminPage.jsx';
-import LoginPage from './pages/admin/LoginPage.jsx';
-import RegisterPage from './pages/admin/RegisterPage.jsx';
-import AddProduct from './pages/admin/AddProduct.jsx';
-
-
+import AdminLayout from "./pages/admin/AdminLayout.jsx";
+import AdminPage from "./pages/admin/AdminPage.jsx";
+import LoginPage from "./pages/admin/LoginPage.jsx";
+import RegisterPage from "./pages/admin/RegisterPage.jsx";
+import AddProduct from "./pages/admin/AddProduct.jsx";
+import EditProduct from "./pages/admin/EditProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,13 +19,11 @@ const router = createBrowserRouter([
       { path: "/admin/login", element: <LoginPage /> },
       { path: "/admin/register", element: <RegisterPage /> },
       { path: "/admin/add-product", element: <AddProduct /> },
-
+      { path: "/admin/edit-product/:id", element: <EditProduct /> },
     ],
   },
-  
 ]);
 
-createRoot(document.getElementById('root')).render(
-  
-    <RouterProvider router={router} />
+createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
 );

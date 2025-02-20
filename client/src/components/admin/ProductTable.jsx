@@ -10,8 +10,6 @@ export default function ProductTable({ products, handleDelete }) {
   const navigate = useNavigate();
   const stateContext = useContext(AdminContext);
 
-
-
   // Route protection
   useEffect(() => {
     if (!stateContext.userLogin) {
@@ -54,12 +52,20 @@ export default function ProductTable({ products, handleDelete }) {
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 <div className="flex justify-center gap-2">
-                <button className="bg-blue-500 text-white px-3 py-1 rounded">
-                  <Edit size={16} />
-                </button>
-                <button onClick={() => handleDelete(product.id)} className="bg-red-500 text-white px-3 py-1 rounded">
-                  <Trash2 size={16} />
-                </button>
+                  <button
+                    onClick={() => {
+                      navigate(`/admin/edit-product/${product.id}`);
+                    }}
+                    className="bg-blue-500 text-white px-3 py-1 rounded"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(product.id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded"
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </div>
               </td>
             </tr>

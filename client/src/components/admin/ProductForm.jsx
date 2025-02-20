@@ -1,11 +1,11 @@
-import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { db } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
 
-export default function ProductForm() {
+export default function ProductForm({productById,productId}) {
   const [input, setInput] = useState({
     name: "",
     price: "",
@@ -26,8 +26,14 @@ export default function ProductForm() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const docRef = await addDoc(collection(db, "products"), input);
-      toast.success("Product added successfully");
+      let docRef;
+      if (productId) {
+        docRef = await updateDoc(doc(db, "products", productId), input)
+      }else{
+        docRef = await addDoc(collection(db, "products"), input);
+      }
+      
+      toast.success(productId ? "Product edited successfully" : "Product added successfully");
       navigate("/admin");
     } catch (error) {
       console.log(error);
@@ -36,6 +42,19 @@ export default function ProductForm() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (productById) {
+      setInput(productById);
+    } else {
+      setInput({
+        name: "",
+        price: "",
+        imageUrl: "",
+        description: "",
+      });
+    }
+  }, [productById]);
 
   return (
     <div>
@@ -47,6 +66,7 @@ export default function ProductForm() {
           </label>
           <input
             onChange={changeInput}
+            value={input.name}
             name="name"
             id="id"
             type="text"
@@ -61,6 +81,7 @@ export default function ProductForm() {
           </label>
           <input
             onChange={changeInput}
+            value={input.price}
             name="price"
             id="price"
             type="number"
@@ -75,6 +96,7 @@ export default function ProductForm() {
           </label>
           <input
             onChange={changeInput}
+            value={input.imageUrl}
             name="imageUrl"
             id="imageUrl"
             type="text"
@@ -89,6 +111,7 @@ export default function ProductForm() {
           </label>
           <textarea
             onChange={changeInput}
+            value={input.description}
             name="description"
             id="description"
             rows="4"
@@ -101,7 +124,7 @@ export default function ProductForm() {
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
         >
-          {!isLoading && "Add Product"}
+          {!isLoading && "Submit"}
           {isLoading && <LoaderCircle className="animate-spin" size={24} />}
         </button>
       </form>
