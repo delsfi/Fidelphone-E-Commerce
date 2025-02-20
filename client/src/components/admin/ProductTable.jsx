@@ -2,10 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../../pages/admin/AdminLayout";
 import { Edit, Trash2 } from "lucide-react";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { toast } from "react-toastify";
 
-export default function ProductTable({ products }) {
+export default function ProductTable({ products, handleDelete }) {
   const navigate = useNavigate();
   const stateContext = useContext(AdminContext);
+
+
 
   // Route protection
   useEffect(() => {
@@ -52,7 +57,7 @@ export default function ProductTable({ products }) {
                 <button className="bg-blue-500 text-white px-3 py-1 rounded">
                   <Edit size={16} />
                 </button>
-                <button className="bg-red-500 text-white px-3 py-1 rounded">
+                <button onClick={() => handleDelete(product.id)} className="bg-red-500 text-white px-3 py-1 rounded">
                   <Trash2 size={16} />
                 </button>
                 </div>

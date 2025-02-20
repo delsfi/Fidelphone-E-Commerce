@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "./AdminLayout";
 import ProductTable from "../../components/admin/ProductTable";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { toast } from "react-toastify";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -12,15 +13,30 @@ export default function AdminPage() {
   const getProducts = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "products"));
-      
+      let data = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        setProducts((prev) => [...prev, { id: doc.id, ...doc.data() }]);
+        data.push ({id: doc.id, ...doc.data()});
       });
+      setProducts(data);
     } catch (error) {
       console.log(error);
     }
   };
+
+    const handleDelete = async (id) => {
+      try {
+        console.log(id);
+        await deleteDoc(doc(db, "products", id));
+        getProducts();
+        toast.success("Product deleted successfully");
+        
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+  
 
   // Route protection
   useEffect(() => {
@@ -34,7 +50,7 @@ export default function AdminPage() {
   return (
     <div className="p-6">
       <h1 className="text-xl font-bold mb-4">Dashboard</h1>
-      <ProductTable products = {products}  />
+      <ProductTable products = {products} handleDelete = {handleDelete}  />
     </div>
   );
 }
