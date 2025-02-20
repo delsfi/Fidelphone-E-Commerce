@@ -7,6 +7,7 @@ import AdminLayout from './pages/admin/AdminLayout.jsx';
 import AdminPage from './pages/admin/AdminPage.jsx';
 import LoginPage from './pages/admin/LoginPage.jsx';
 import RegisterPage from './pages/admin/RegisterPage.jsx';
+import AddProduct from './pages/admin/AddProduct.jsx';
 
 
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: "/admin", element: <AdminPage /> },
       { path: "/admin/login", element: <LoginPage /> },
       { path: "/admin/register", element: <RegisterPage /> },
+      { path: "/admin/add-product", element: <AddProduct /> },
 
     ],
   },
