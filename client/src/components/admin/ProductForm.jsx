@@ -122,7 +122,7 @@ export default function ProductForm({productById,productId}) {
         {/* Submit Button */}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-400 cursor-pointer"
         >
           {!isLoading && "Submit"}
           {isLoading && <LoaderCircle className="animate-spin" size={24} />}

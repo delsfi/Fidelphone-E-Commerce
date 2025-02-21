@@ -21,36 +21,29 @@ export default function AdminNavbar() {
   };
 
   return (
-    <nav className="relative w-full px-4 sm:px-6 py-3 flex justify-between items-center bg-cover bg-center">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: `url('https://cdn.mos.cms.futurecdn.net/yFVTwgKyQ3uuEf4DRx6imK-1200-80.jpg')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "blur(8px)",
-          zIndex: -1,
-        }}
-      />
-
-      {/* Overlay */}
-      <div
-        className={`absolute inset-0 ${
-          stateContext.theme ? "bg-white/70" : "bg-black/60"
-        } backdrop-blur-lg z-0`}
-      />
-
+    <nav
+      className={`sticky top-0 z-50 w-full px-4 sm:px-6 py-3 flex justify-between items-center 
+  ${
+    stateContext.theme
+      ? "bg-white border-b border-gray-200 shadow-sm"
+      : "bg-gray-800 border-b border-gray-700 shadow-md"
+  }`}
+    >
       {/* Navbar Content */}
       <div className="relative z-10 flex w-full justify-between items-center">
         <div className="flex items-center gap-3">
           {/* Burger Menu untuk Mobile */}
           {stateContext.userLogin && (
             <button
-              className="md:hidden text-white"
-              onClick={() => stateContext.setSidebarOpen(true)}
+              className="md:hidden cursor-pointer"
+              onClick={() =>
+                stateContext.setSidebarOpen(!stateContext.sidebarOpen)
+              } // Toggle sidebar
             >
-              <Menu size={28} />
+              <Menu
+                size={28}
+                className={stateContext.theme ? "text-slate-700" : "text-white"}
+              />
             </button>
           )}
 
@@ -114,7 +107,7 @@ export default function AdminNavbar() {
           {stateContext.theme ? (
             <Sun
               size={28}
-              className="cursor-pointer text-navy-700"
+              className="cursor-pointer text-slate-700"
               onClick={stateContext.changeTheme}
             />
           ) : (

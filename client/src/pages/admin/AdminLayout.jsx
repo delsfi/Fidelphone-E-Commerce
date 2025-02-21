@@ -11,7 +11,7 @@ export default function AdminLayout() {
   const [theme, setTheme] = useState(true);
   const [userLogin, setUserLogin] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // NEW: untuk toggle sidebar di mobile
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const changeTheme = () => setTheme(!theme);
 
