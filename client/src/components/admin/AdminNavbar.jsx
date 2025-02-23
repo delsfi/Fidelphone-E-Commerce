@@ -63,7 +63,7 @@ export default function AdminNavbar() {
           {!stateContext.userLogin && (
             <>
               <button
-                className={`text-sm sm:text-base ${
+                className={`text-sm sm:text-base cursor-pointer ${
                   stateContext.theme
                     ? "text-navy-700 hover:underline"
                     : "text-white hover:underline"
@@ -73,7 +73,7 @@ export default function AdminNavbar() {
                 Sign In
               </button>
               <button
-                className={`text-sm sm:text-base px-3 py-1 sm:px-4 sm:py-2 rounded-md ${
+                className={`text-sm sm:text-base px-3 py-1 sm:px-4 sm:py-2 rounded-md cursor-pointer ${
                   stateContext.theme
                     ? "bg-slate-700 text-white hover:bg-slate-800"
                     : "bg-slate-700 text-white hover:bg-slate-600"
@@ -95,13 +95,12 @@ export default function AdminNavbar() {
                 {stateContext.userLogin.email}
               </p>
               <button
-  className="flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md text-sm sm:text-base"
-  onClick={handleLogout}
->
-  <LogOut size={20} className="flex-shrink-0" />
-  <span>Logout</span>
-</button>
-
+                className="flex items-center cursor-pointer gap-2 px-3 py-1 sm:px-4 sm:py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md text-sm sm:text-base"
+                onClick={handleLogout}
+              >
+                <LogOut size={20} className="flex-shrink-0" />
+                <span>Logout</span>
+              </button>
             </div>
           )}
 

@@ -37,7 +37,7 @@ export default function ProductTable({ products, handleDelete }) {
             <th className="px-4 py-3 text-center sm:table-cell">
               Product Image
             </th>
-            <th className="px-4 py-3 sm:table-cell">Description</th>
+            <th className="px-4 py-3 sm:table-cell text-center">Description</th>
             <th className="px-4 py-3 text-center">Action</th>
           </tr>
         </thead>
@@ -53,10 +53,10 @@ export default function ProductTable({ products, handleDelete }) {
             >
               <td className="px-4 py-3 text-center">{index + 1}</td>
               <td className="px-4 py-3">{product.name}</td>
-              <td className="px-4 py-3">Rp. {product.price}</td>
+              <td className="px-4 py-3">Rp.{product.price}</td>
 
               {/* Image - Hidden on Mobile */}
-              <td className="px-4 py-3 sm:table-cell grid place-items-center">
+              <td className="px-4 py-3 sm:table-cell place-items-center">
                 <img
                   src={product.imageUrl}
                   alt={product.name}
@@ -76,25 +76,25 @@ export default function ProductTable({ products, handleDelete }) {
                     onClick={() =>
                       navigate(`/admin/edit-product/${product.id}`)
                     }
-                    className={`flex items-center gap-2 px-3 py-2 rounded-md shadow-md transition ${
+                    className={`flex items-center gap-2 px-3 py-2 rounded-md shadow-md transition cursor-pointer ${
                       stateContext.theme
                         ? "bg-blue-500 text-white hover:bg-blue-600"
                         : "bg-blue-600 text-white hover:bg-blue-700"
                     }`}
                   >
                     <Edit size={18} />
-                    <span className="sm:inline">Edit</span>
+                    <span className="sm:inline ">Edit</span>
                   </button>
                   <button
                     onClick={() => handleDelete(product.id)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-md shadow-md transition ${
+                    className={`flex items-center gap-2 px-3 py-2 rounded-md shadow-md transition cursor-pointer  ${
                       stateContext.theme
                         ? "bg-red-500 text-white hover:bg-red-600"
                         : "bg-red-600 text-white hover:bg-red-700"
                     }`}
                   >
                     <Trash2 size={18} />
-                    <span className="sm:inline">Delete</span>
+                    <span className="sm:inline ">Delete</span>
                   </button>
                 </div>
               </td>

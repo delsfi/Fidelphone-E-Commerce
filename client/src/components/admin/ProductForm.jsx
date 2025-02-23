@@ -145,9 +145,13 @@ export default function ProductForm({ productById, productId }) {
           </div>
 
           {/* Submit Button */}
+          <div className="flex justify-end items-center gap-5">
+            <div className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-white cursor-pointer" onClick={() => navigate("/admin")}>
+              Cancel
+            </div>
           <button
             type="submit"
-            className={`w-full px-4 py-2 rounded-md transition flex items-center justify-center gap-2 shadow-md ${
+            className={`px-4 py-2 rounded-md transition flex items-center justify-center gap-2 shadow-md cursor-pointer ${
               stateContext.theme
                 ? "bg-blue-600 text-white hover:bg-blue-500"
                 : "bg-blue-600 text-white hover:bg-blue-500"
@@ -159,6 +163,7 @@ export default function ProductForm({ productById, productId }) {
               "Submit"
             )}
           </button>
+          </div>
         </form>
       </div>
 
