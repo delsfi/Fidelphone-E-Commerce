@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { auth } from "../../config/firebase";
 import { AdminContext } from "../../pages/admin/AdminLayout";
 import { useContext } from "react";
-import { Moon, Sun, Menu } from "lucide-react";
+import { Moon, Sun, Menu, LogOut } from "lucide-react";
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
@@ -95,11 +95,13 @@ export default function AdminNavbar() {
                 {stateContext.userLogin.email}
               </p>
               <button
-                className="px-3 py-1 sm:px-4 sm:py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md text-sm sm:text-base"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
+  className="flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md text-sm sm:text-base"
+  onClick={handleLogout}
+>
+  <LogOut size={20} className="flex-shrink-0" />
+  <span>Logout</span>
+</button>
+
             </div>
           )}
 

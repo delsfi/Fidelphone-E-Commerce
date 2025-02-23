@@ -3,6 +3,7 @@ import ProductForm from "../../components/admin/ProductForm";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { useEffect, useState } from "react";
+import UploadWidget from "../../components/admin/UploadWidget";
 
 export default function EditProduct() {
   const { id } = useParams();

@@ -39,11 +39,8 @@ export default function AdminPage() {
         stateContext.theme ? "bg-white text-gray-800" : "bg-gray-900 text-gray-300"
       }`}
     >
-      <h1 className="text-xl font-bold mb-4">Dashboard</h1>
+      <h1 className="text-xl font-bold">Dashboard</h1>
       <div
-        className={`p-4 rounded-lg shadow-md ${
-          stateContext.theme ? "bg-gray-100 border-gray-300" : "bg-gray-800 border-gray-700"
-        }`}
       >
         <ProductTable products={products} handleDelete={handleDelete} />
       </div>
