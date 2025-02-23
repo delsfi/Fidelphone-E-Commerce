@@ -171,8 +171,6 @@ export default function LoginPage() {
           >
             {loading ? <LoaderCircle className="animate-spin" /> : "Sign In"}
           </button>
-
-          
         </form>
         {/* Button */}
         <div className="flex items-center w-full pt-3">
@@ -185,27 +183,23 @@ export default function LoginPage() {
               alt="google"
               className="w-6 h-6"
             />
-            {loading ? (
-              <LoaderCircle className="animate-spin" />
-            ) : (
-              "Sign In With Google"
-            )}
+            Sign In With Google
           </button>
         </div>
         {/* Register */}
         <p
-            className={`text-sm text-center ${
-              stateContext.theme ? "text-gray-600" : "text-gray-400"
-            }`}
+          className={`text-sm text-center ${
+            stateContext.theme ? "text-gray-600" : "text-gray-400"
+          }`}
+        >
+          Don't have an account?{" "}
+          <span
+            className="text-slate-500 hover:underline cursor-pointer"
+            onClick={() => navigate("/admin/register")}
           >
-            Don't have an account?{" "}
-            <span
-              className="text-slate-500 hover:underline cursor-pointer"
-              onClick={() => navigate("/admin/register")}
-            >
-              Sign up
-            </span>
-          </p>
+            Sign up
+          </span>
+        </p>
       </div>
     </div>
   );

@@ -67,10 +67,10 @@ export default function ProductForm({ productById, productId }) {
   }, [productById]);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-start gap-6 p-4">
+    <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-start gap-6 p-3">
       {/* Form */}
       <div
-        className={`w-full sm:w-1/2 max-w-md sm:max-w-none p-4 rounded-lg transition-all duration-300 ${
+        className={`w-full sm:w-1/2 max-w-md sm:max-w-none transition-all duration-300 ${
           stateContext.theme
             ? "bg-white text-gray-800"
             : "bg-gray-900 text-gray-300"
@@ -127,7 +127,7 @@ export default function ProductForm({ productById, productId }) {
               <UploadWidget onImageUpload={handleImageUpload} />
             </div>
           </div>
-
+          
           {/* Description */}
           <div>
             <label className="block text-sm font-medium">Description</label>
@@ -149,7 +149,7 @@ export default function ProductForm({ productById, productId }) {
             type="submit"
             className={`w-full px-4 py-2 rounded-md transition flex items-center justify-center gap-2 shadow-md ${
               stateContext.theme
-                ? "bg-blue-500 text-white hover:bg-blue-400"
+                ? "bg-blue-600 text-white hover:bg-blue-500"
                 : "bg-blue-600 text-white hover:bg-blue-500"
             }`}
           >
@@ -168,7 +168,7 @@ export default function ProductForm({ productById, productId }) {
           <img
             src={input.imageUrl}
             alt="Uploaded"
-            className="w-40 h-40 sm:w-64 sm:h-64 object-cover rounded-md shadow-lg"
+            className="w-40 h-40 sm:w-64 sm:h-64 object-cover"
           />
         </div>
       )}
