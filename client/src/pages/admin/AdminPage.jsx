@@ -1,16 +1,16 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AdminContext } from "./AdminLayout";
 import ProductTable from "../../components/admin/ProductTable";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsThunk } from "../../store/appSlice";
+import { AuthContext } from "../Auth";
 
 export default function AdminPage() {
   const navigate = useNavigate();
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
   const { products } = useSelector((state) => state.app);
   const dispatch = useDispatch();
 

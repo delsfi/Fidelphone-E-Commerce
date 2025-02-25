@@ -1,18 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { auth, db } from "../../config/firebase";
 import { toast } from "react-toastify";
-import { AdminContext } from "./AdminLayout";
 import { Eye, EyeClosed, LoaderCircle } from "lucide-react";
+import { doc, setDoc } from "firebase/firestore";
+import { AuthContext } from "../Auth";
 
 export default function RegisterPage() {
-  const [input, setInput] = useState({ email: "", password: "" });
+  const [input, setInput] = useState({ email: "", password: "", firstName: "", lastName: "" });
   const [loading, setLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
 
   const navigate = useNavigate();
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -23,9 +24,19 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, input.email, input.password);
+      const userCredential = await createUserWithEmailAndPassword(auth, input.email, input.password);
       navigate("/admin/login");
       toast.success("Register Success");
+      console.log(userCredential.user.uid, "<<<<<");
+      if (userCredential.user.uid) {
+        await setDoc(doc(db, "users", userCredential.user.uid), {
+          email: input.email,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          role : "customer"
+        });
+      }
+      
     } catch (error) {
       switch (error.message) {
         case "Firebase: Error (auth/invalid-email).":
@@ -78,7 +89,7 @@ export default function RegisterPage() {
 
       {/* Content */}
       <div
-        className={`relative z-10 w-[400px] p-8 rounded-2xl shadow-2xl backdrop-blur-md ${
+        className={`relative z-10 w-[450px] p-8 rounded-2xl shadow-2xl backdrop-blur-md ${
           stateContext.theme ? "bg-white" : "bg-gray-800/70"
         }`}
       >
@@ -98,7 +109,46 @@ export default function RegisterPage() {
         </p>
 
         <form onSubmit={handleSubmitRegister} className="space-y-5">
-          {/* Email */}
+          <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label
+              className={`block font-medium ${
+                stateContext.theme ? "text-gray-700" : "text-gray-200"
+              }`}
+            >
+              First Name
+            </label>
+            <input
+              onChange={handleChangeInput}
+              name="firstName"
+              placeholder="Enter your first name"
+              className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 ${
+                stateContext.theme
+                  ? "bg-gray-50 border border-gray-300 text-gray-900"
+                  : "bg-gray-700 border border-gray-600 text-white"
+              }`}
+            />
+          </div>
+          <div>
+            <label
+              className={`block font-medium ${
+                stateContext.theme ? "text-gray-700" : "text-gray-200"
+              }`}
+            >
+              Last Name
+            </label>
+            <input
+              onChange={handleChangeInput}
+              name="lastName"
+              placeholder="Enter your last name"
+              className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 ${
+                stateContext.theme
+                  ? "bg-gray-50 border border-gray-300 text-gray-900"
+                  : "bg-gray-700 border border-gray-600 text-white"
+              }`}
+            />
+          </div>
+          </div>
           <div>
             <label
               className={`block font-medium ${

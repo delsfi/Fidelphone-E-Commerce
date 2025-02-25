@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
 import { EyeClosed, Eye, LoaderCircle } from "lucide-react";
 import { auth, provider } from "../../config/firebase";
-import { AdminContext } from "./AdminLayout";
+import { AuthContext } from "../Auth";
 
 export default function LoginPage() {
   const [input, setInput] = useState({ email: "", password: "" });
@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [isShowPass, setIsShowPass] = useState(false);
 
   const navigate = useNavigate();
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;

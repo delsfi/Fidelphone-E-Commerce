@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AdminContext } from "../../pages/admin/AdminLayout";
 import { Edit, Trash2 } from "lucide-react";
+import { AuthContext } from "../../pages/Auth";
 
 export default function ProductTable({ products, handleDelete }) {
   const navigate = useNavigate();
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
 
   // Route protection
   useEffect(() => {

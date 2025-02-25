@@ -5,7 +5,7 @@ import { db } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
 import UploadWidget from "../../components/admin/UploadWidget";
-import { AdminContext } from "../../pages/admin/AdminLayout";
+import { AuthContext } from "../../pages/Auth";
 
 export default function ProductForm({ productById, productId }) {
   const [input, setInput] = useState({
@@ -18,7 +18,7 @@ export default function ProductForm({ productById, productId }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
 
   const changeInput = (e) => {
     const { value, name } = e.target;

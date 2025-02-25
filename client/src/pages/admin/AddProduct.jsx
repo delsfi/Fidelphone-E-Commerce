@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import ProductForm from "../../components/admin/ProductForm";
-import { AdminContext } from "./AdminLayout";
+import { AuthContext } from "../Auth";
 
 export default function AddProduct() {
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
   return (
     <>
       <div

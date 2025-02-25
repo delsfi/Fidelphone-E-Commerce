@@ -1,11 +1,11 @@
 import { House, PackagePlusIcon, X, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AdminContext } from "../../pages/admin/AdminLayout";
 import { useContext } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../pages/Auth";
 
 const sidebarLink = [
   {
@@ -21,7 +21,7 @@ const sidebarLink = [
 ];
 
 export default function AdminSidebar() {
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {

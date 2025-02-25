@@ -3,11 +3,11 @@ import ProductForm from "../../components/admin/ProductForm";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { useContext, useEffect, useState } from "react";
-import { AdminContext } from "./AdminLayout";
+import { AuthContext } from "../Auth";
 
 export default function EditProduct() {
   const { id } = useParams();
-  const stateContext = useContext(AdminContext);
+  const stateContext = useContext(AuthContext);
 
   const [productById, setProductById] = useState(null);
 

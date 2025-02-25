@@ -1,7 +1,7 @@
 import AdminNavbar from "../../components/admin/AdminNavbar";
 
 
-export default function HomePage() {
+export default function RootLayout() {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen">
