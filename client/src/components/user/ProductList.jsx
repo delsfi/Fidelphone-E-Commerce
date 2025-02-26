@@ -6,7 +6,7 @@ export default function ProductList({ products }) {
       {products.length > 0 ? (
         products.map((product) => <ProductCard key={product.id} product={product} />)
       ) : (
-        <p className="col-span-full text-center text-gray-500">No products available</p>
+        <p className="text-center col-span-full text-gray-500">No products available</p>
       )}
     </div>
   );

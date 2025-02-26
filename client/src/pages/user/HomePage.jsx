@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getProductsThunk } from "../../store/appSlice"; 
 import HeroSection from "../../components/user/HeroSection";
 import ProductList from "../../components/user/ProductList";
-import { useEffect } from "react";
-import { getProductsThunk } from "../../store/appSlice";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export default function HomePage() {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <HeroSection />
 

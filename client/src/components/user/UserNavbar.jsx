@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../../config/firebase";
 import { useContext } from "react";
-import { Moon, Sun, Menu, LogOut } from "lucide-react";
+import { Moon, Sun, Menu, LogOut, Apple } from "lucide-react";
 import { AuthContext } from "../../pages/Auth";
 
 export default function UserNavbar() {
@@ -22,22 +22,20 @@ export default function UserNavbar() {
 
   return (
     <nav
-      className={`sticky top-0 z-50 w-full px-4 sm:px-6 py-3 flex justify-between items-center 
-  ${
-    stateContext.theme
-      ? "bg-white border-b border-gray-200 shadow-sm"
-      : "bg-gray-800 border-b border-gray-700 shadow-md"
-  }`}
+      className={`sticky top-0 z-50 w-full border-b ${
+        stateContext.theme
+          ? "bg-white border-gray-200 shadow-sm"
+          : "bg-gray-800 border-gray-700 shadow-md"
+      }`}
     >
-      {/* Navbar Content */}
-      <div className="relative z-10 flex w-full justify-between items-center">
-        <div className="flex items-center gap-3">
-          {/* Burger Menu untuk Mobile */}
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
+        {/* Logo & Burger Menu */}
+        <div className="flex items-center gap-3 flex-1">
           {stateContext.userLogin && (
             <button
               className="md:hidden cursor-pointer"
               onClick={() =>
-                stateContext.setSidebarOpen(!stateContext.sidebarOpen)
+                stateContext.setSidebarOpen?.((prev) => !prev)
               } // Toggle sidebar
             >
               <Menu
@@ -54,13 +52,13 @@ export default function UserNavbar() {
             }`}
             onClick={() => navigate("/admin")}
           >
-            Fidel Phone
+            <Apple /> Fidel Phone
           </div>
         </div>
 
-        {/* Menu */}
+        {/* Menu & Theme Switch */}
         <div className="flex gap-4 items-center">
-          {!stateContext.userLogin && (
+          {!stateContext.userLogin ? (
             <>
               <button
                 className={`text-sm sm:text-base cursor-pointer ${
@@ -83,9 +81,7 @@ export default function UserNavbar() {
                 Sign Up
               </button>
             </>
-          )}
-
-          {stateContext.userLogin && (
+          ) : (
             <div className="hidden sm:flex items-center gap-3">
               <p
                 className={`text-sm sm:text-base ${
@@ -105,19 +101,13 @@ export default function UserNavbar() {
           )}
 
           {/* Theme Switch */}
-          {stateContext.theme ? (
-            <Sun
-              size={28}
-              className="cursor-pointer text-slate-700"
-              onClick={stateContext.changeTheme}
-            />
-          ) : (
-            <Moon
-              size={28}
-              className="cursor-pointer text-white"
-              onClick={stateContext.changeTheme}
-            />
-          )}
+          <button onClick={stateContext.changeTheme} className="p-1">
+            {stateContext.theme ? (
+              <Sun size={28} className="text-slate-700" />
+            ) : (
+              <Moon size={28} className="text-white" />
+            )}
+          </button>
         </div>
       </div>
     </nav>
