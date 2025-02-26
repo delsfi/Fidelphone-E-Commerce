@@ -20,12 +20,13 @@ export default function AdminLayout() {
   } = useContext(AuthContext);
 
   useEffect(() => {
-    if (role == "admin" || role == "superadmin") {
+    if (role === "admin" || role === "superadmin") {
       navigate("/admin");
-    } else {
-      navigate("/admin");
+    } else if (role) {
+      navigate("/");
     }
-  }, []);
+  }, [role]);
+  
 
   return (
     <>

@@ -56,6 +56,7 @@ const AuthProvider = () => {
 
     return () => unsubscribe();
   }, []);
+  
 
   return (
     <AuthContext.Provider
