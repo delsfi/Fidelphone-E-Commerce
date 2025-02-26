@@ -13,6 +13,7 @@ import store from "./store/index.js";
 import HomePage from "./pages/user/HomePage.jsx";
 import RootLayout from "./pages/user/RootLayout.jsx";
 import Auth from "./pages/Auth.jsx";
+import ProductDetail from "./pages/user/ProductsDetail.jsx";
 
 
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <HomePage />,
+          },
+          {
+            path: "/product/:id",
+            element: <ProductDetail />,
           },
         ],
       },
