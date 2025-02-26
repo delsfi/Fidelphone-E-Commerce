@@ -1,13 +1,31 @@
-import { useContext } from "react";
+import { use, useContext, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import AdminNavbar from "../../components/admin/AdminNavbar";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import { AuthContext } from "../Auth";
 
 export default function AdminLayout() {
+
+  const navigate = useNavigate();
   // Ambil data dari AuthContext
-  const { theme, changeTheme, userLogin, loading, sidebarOpen, setSidebarOpen } = useContext(AuthContext);
+  const {
+    theme,
+    changeTheme,
+    userLogin,
+    loading,
+    sidebarOpen,
+    setSidebarOpen,
+    role,
+  } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (role == "admin" || role == "superadmin") {
+      navigate("/admin");
+    } else {
+      navigate("/admin");
+    }
+  }, []);
 
   return (
     <>
@@ -18,7 +36,11 @@ export default function AdminLayout() {
         {!loading && userLogin && <AdminSidebar />}
 
         {/* Konten Utama */}
-        <div className={`flex-grow transition-all ${userLogin ? "md:pl-[200px]" : ""}`}>
+        <div
+          className={`flex-grow transition-all ${
+            userLogin ? "md:pl-[200px]" : ""
+          }`}
+        >
           <Outlet />
         </div>
       </div>
