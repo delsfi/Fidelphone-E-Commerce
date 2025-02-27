@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
 import { EyeClosed, Eye, LoaderCircle } from "lucide-react";
-import { auth, provider } from "../../config/firebase";
+import { auth, db, provider } from "../../config/firebase";
 import { AuthContext } from "../Auth";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function LoginPage() {
   const [input, setInput] = useState({ email: "", password: "" });
@@ -50,6 +51,14 @@ export default function LoginPage() {
   const HandleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
+      if (result.user.uid) {
+        await setDoc(doc(db, "users", result.user.uid), {
+          email: result.user.email,
+          firstName: result.user.displayName.split(" ") [0],
+          lastName: result.user.displayName.split(" ") [1],
+          role : "customer"
+        });
+      }
     } catch (error) {
       console.log(error);
     }

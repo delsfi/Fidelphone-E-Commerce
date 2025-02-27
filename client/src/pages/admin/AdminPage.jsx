@@ -27,7 +27,7 @@ export default function AdminPage() {
   // Route protection
   useEffect(() => {
     if (!stateContext.userLogin) {
-      navigate("/admin/login");
+      navigate("/login");
     } else {
       dispatch(getProductsThunk());
     }

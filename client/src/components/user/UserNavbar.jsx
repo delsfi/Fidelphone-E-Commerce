@@ -13,7 +13,7 @@ export default function UserNavbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/admin/login");
+      navigate("/login");
       toast.success("Logout Success");
     } catch (error) {
       console.log(error);
@@ -83,7 +83,7 @@ export default function UserNavbar() {
             <input
               type="text"
               placeholder="Search..."
-              className="px-3 py-1.5 text-sm border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <Search size={18} className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
           </div>
@@ -105,7 +105,7 @@ export default function UserNavbar() {
                     ? "text-navy-700 hover:underline"
                     : "text-white hover:underline"
                 }`}
-                onClick={() => navigate("/admin/login")}
+                onClick={() => navigate("/login")}
               >
                 Sign In
               </button>
@@ -115,7 +115,7 @@ export default function UserNavbar() {
                     ? "bg-slate-700 text-white hover:bg-slate-800"
                     : "bg-slate-700 text-white hover:bg-slate-600"
                 }`}
-                onClick={() => navigate("/admin/register")}
+                onClick={() => navigate("/register")}
               >
                 Sign Up
               </button>

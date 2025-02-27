@@ -25,8 +25,6 @@ const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           { path: "", element: <AdminPage /> },
-          { path: "login", element: <LoginPage /> },
-          { path: "register", element: <RegisterPage /> },
           { path: "add-product", element: <AddProduct /> },
           { path: "edit-product/:id", element: <EditProduct /> },
         ],
@@ -43,6 +41,8 @@ const router = createBrowserRouter([
             path: "/product/:id",
             element: <ProductDetail />,
           },
+          { path: "login", element: <LoginPage /> },
+          { path: "register", element: <RegisterPage /> },
         ],
       },
     ],

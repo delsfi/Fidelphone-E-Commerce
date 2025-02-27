@@ -20,7 +20,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (!userLogin) {
-      navigate("/admin/login");
+      navigate("/login");
     }
   }, [userLogin]); // Akan dijalankan saat `userLogin` berubah
 
@@ -28,9 +28,9 @@ export default function RootLayout() {
     <>
       <UserNavbar />
 
-      <div className="max-w-screen-xl mx-auto px-4 py-6">
+
         <Outlet />
-      </div>
+
 
       <ToastContainer />
     </>

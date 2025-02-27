@@ -27,6 +27,7 @@ export default function HomePage() {
   }, [queryParams, dispatch]);
 
   return (
+    <div className="max-w-screen-xl mx-auto px-4 py-6">
     <div className="min-h-screen">
       {/* Hero Section */}
       <HeroSection />
@@ -68,6 +69,7 @@ export default function HomePage() {
       <div className="container mx-auto">
         <ProductList products={products} />
       </div>
+    </div>
     </div>
   );
 }

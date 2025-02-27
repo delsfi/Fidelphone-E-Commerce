@@ -25,7 +25,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, input.email, input.password);
-      navigate("/admin/login");
+      navigate("/login");
       toast.success("Register Success");
       console.log(userCredential.user.uid, "<<<<<");
       if (userCredential.user.uid) {

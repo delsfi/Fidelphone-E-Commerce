@@ -13,7 +13,7 @@ export default function AdminNavbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/admin/login");
+      navigate("/login");
       toast.success("Logout Success");
     } catch (error) {
       console.log(error);
@@ -68,7 +68,7 @@ export default function AdminNavbar() {
                     ? "text-navy-700 hover:underline"
                     : "text-white hover:underline"
                 }`}
-                onClick={() => navigate("/admin/login")}
+                onClick={() => navigate("/login")}
               >
                 Sign In
               </button>
@@ -78,7 +78,7 @@ export default function AdminNavbar() {
                     ? "bg-slate-700 text-white hover:bg-slate-800"
                     : "bg-slate-700 text-white hover:bg-slate-600"
                 }`}
-                onClick={() => navigate("/admin/register")}
+                onClick={() => navigate("/register")}
               >
                 Sign Up
               </button>
