@@ -1,62 +1,71 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsThunk } from "../../store/appSlice";
 import HeroSection from "../../components/user/HeroSection";
 import ProductList from "../../components/user/ProductList";
+import { Filter, ArrowDownAZ, ArrowUpAZ, ArrowUpDown } from "lucide-react";
 
 export default function HomePage() {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.app);
 
-  const [category, setCategory] = useState("");
+  const [queries, setQueries] = useState({
+    filterCategory: "",
+    sortPrice: "",
+  });
+
+  const handleChangeQuery = (e) => {
+    const { name, value } = e.target;
+    setQueries((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Menggunakan useMemo untuk mencegah fetching berulang kali
+  const queryParams = useMemo(() => queries, [queries]);
 
   useEffect(() => {
-    if (category) {
-      dispatch(getProductsThunk({ category }));
-    } else {
-      dispatch(getProductsThunk());
-    }
-  }, [category]);
+    dispatch(getProductsThunk(queryParams));
+  }, [queryParams, dispatch]);
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <HeroSection />
-      <div className="flex pt-3 items-center gap-2">
-        {category}
-        <select
-          name="filterCategory"
-          id="filterCategory"
-          defaultValue={""}
-          className="px-4 py-2 rounded-md border text-sm"
-          onChange={(e) => {
-            setCategory(e.target.value);
-          }}
-        >
-          <option value="">Select Category</option>
-          <option value="iphone">iPhone</option>
-          <option value="samsung">Samsung</option>
-          <option value="xioami">Xiaomi</option>
-          <option value="vivo">Vivo</option>
-        </select>
-        <select
-          name="sortPrice"
-          id="sortPrice"
-          defaultValue={""}
-          className="px-4 py-2 rounded-md border text-sm"
-          // onChange={handleChangeQuery}
-        >
-          <option value="">Sort Price</option>
-          <option value="asc">Harga terendah</option>
-          <option value="desc">Harga tertinggi</option>
-        </select>
+
+      {/* Filter & Sort Section */}
+      <div className="flex flex-wrap justify-between items-center bg-gray-100 p-4 shadow-md mt-4 mb-2">
+        {/* Filter Kategori */}
+        <div className="flex items-center gap-2">
+          <Filter className="text-gray-600 w-5 h-5" />
+          <select
+            name="filterCategory"
+            className="px-4 py-2 rounded-md text-sm bg-white shadow-sm hover:bg-gray-50 focus:outline-none transition"
+            onChange={handleChangeQuery}
+          >
+            <option value="">Semua Kategori</option>
+            <option value="iphone">iPhone</option>
+            <option value="samsung">Samsung</option>
+            <option value="xiaomi">Xiaomi</option>
+            <option value="vivo">Vivo</option>
+          </select>
+        </div>
+
+        {/* Sort Harga */}
+        <div className="flex items-center gap-2">
+          <ArrowUpDown className="text-gray-600 w-5 h-5" />
+          <select
+            name="sortPrice"
+            className="px-4 py-2 rounded-md text-sm bg-white shadow-sm hover:bg-gray-50 focus:outline-none transition"
+            onChange={handleChangeQuery}
+          >
+            <option value="">Urutkan Harga</option>
+            <option value="asc">Harga Terendah</option>
+            <option value="desc">Harga Tertinggi</option>
+          </select>
+        </div>
       </div>
 
       {/* Product List */}
-      <div className="container mx-auto px-2 py-3">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Our Products
-        </h2>
+      <div className="container mx-auto">
         <ProductList products={products} />
       </div>
     </div>

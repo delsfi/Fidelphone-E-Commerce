@@ -44,7 +44,7 @@ export default function ProductDetail() {
           <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
           <p className="text-gray-700 text-lg">{product.description}</p>
           <span className="text-2xl font-semibold text-blue-600">
-            Rp {product.price.toLocaleString()}
+            Rp {product.price.toLocaleString("id-ID")}
           </span>
 
           <button className="flex items-center justify-center gap-2 bg-blue-600 text-white text-lg font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition">

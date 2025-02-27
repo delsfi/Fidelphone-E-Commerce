@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export const appSlice = createSlice({
@@ -41,13 +41,16 @@ export default appSlice.reducer;
 
 export const getProductsThunk = (params) => async (dispatch) => {
   try {
-    let q = query(collection(db, "products"));
-    if (params?.category) {
-      q = query(
-        collection(db, "products"),
-        where("category", "==", params.category)
-      );
+    let q = collection(db, "products");
+
+    if (params?.filterCategory) {
+      q = query(q, where("category", "==", params.filterCategory));
     }
+
+    if (params?.sortPrice) {
+      q = query(q, orderBy("price", params.sortPrice));
+    }
+
 
     const querySnapshot = await getDocs(q);
     let data = [];
