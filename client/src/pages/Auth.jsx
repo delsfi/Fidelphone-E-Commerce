@@ -24,7 +24,7 @@ const AuthProvider = () => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
      if (user) {
-      console.log(user);
+      
       
       const docRef = doc(db, "users", user.uid);
       
@@ -35,7 +35,7 @@ const AuthProvider = () => {
 
       } else {
         // docSnap.data() will be undefined in this case
-        console.log("No such document!");
+        
       }
      }
      

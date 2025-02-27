@@ -13,6 +13,7 @@ export default function ProductForm({ productById, productId }) {
     price: "",
     imageUrl: "",
     description: "",
+    category: "",
   });
 
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ export default function ProductForm({ productById, productId }) {
         price: "",
         imageUrl: "",
         description: "",
+        category: "",
       });
     }
   }, [productById]);
@@ -84,6 +86,21 @@ export default function ProductForm({ productById, productId }) {
               onChange={changeInput}
               value={input.name}
               name="name"
+              type="text"
+              className={`mt-1 block w-full p-2 border rounded-md transition ${
+                stateContext.theme
+                  ? "border-gray-300 bg-white text-gray-900"
+                  : "border-gray-600 bg-gray-700 text-gray-200"
+              }`}
+            />
+          </div>
+          {/* Category */}
+          <div>
+            <label className="block text-sm font-medium">Category</label>
+            <input
+              onChange={changeInput}
+              value={input.category}
+              name="category"
               type="text"
               className={`mt-1 block w-full p-2 border rounded-md transition ${
                 stateContext.theme

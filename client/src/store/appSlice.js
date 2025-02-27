@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export const appSlice = createSlice({
@@ -31,17 +31,25 @@ export const appSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-    increment,
-    decrement,
-    incrementByAmount,
-    onFetchProductSuccess,
-  } = appSlice.actions;
-  
-  export default appSlice.reducer;
+  increment,
+  decrement,
+  incrementByAmount,
+  onFetchProductSuccess,
+} = appSlice.actions;
 
-export const getProductsThunk = () => async (dispatch) => {
+export default appSlice.reducer;
+
+export const getProductsThunk = (params) => async (dispatch) => {
   try {
-    const querySnapshot = await getDocs(collection(db, "products"));
+    let q = query(collection(db, "products"));
+    if (params?.category) {
+      q = query(
+        collection(db, "products"),
+        where("category", "==", params.category)
+      );
+    }
+
+    const querySnapshot = await getDocs(q);
     let data = [];
     querySnapshot.forEach((doc) => {
       data.push({ id: doc.id, ...doc.data() });
@@ -52,5 +60,3 @@ export const getProductsThunk = () => async (dispatch) => {
     console.log(error);
   }
 };
-
-

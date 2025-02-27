@@ -33,6 +33,7 @@ export default function ProductTable({ products, handleDelete }) {
           >
             <th className="px-4 py-3">No</th>
             <th className="px-4 py-3">Product Name</th>
+            <th className="px-4 py-3">Category</th>
             <th className="px-4 py-3">Price</th>
             <th className="px-4 py-3 text-center sm:table-cell">
               Product Image
@@ -53,6 +54,7 @@ export default function ProductTable({ products, handleDelete }) {
             >
               <td className="px-4 py-3 text-center">{index + 1}</td>
               <td className="px-4 py-3">{product.name}</td>
+              <td className="px-4 py-3">{product.category}</td>
               <td className="px-4 py-3">Rp.{product.price}</td>
 
               {/* Image - Hidden on Mobile */}

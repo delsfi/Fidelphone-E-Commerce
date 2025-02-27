@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import ProductForm from "../../components/admin/ProductForm";
 import { AuthContext } from "../Auth";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
   const stateContext = useContext(AuthContext);
