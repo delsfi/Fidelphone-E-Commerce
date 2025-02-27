@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../../config/firebase";
 import { useContext } from "react";
-import { Moon, Sun, Menu, LogOut, Apple } from "lucide-react";
+import { Moon, Sun, Menu, LogOut, ShoppingCart, Search } from "lucide-react";
 import { AuthContext } from "../../pages/Auth";
 
 export default function UserNavbar() {
@@ -29,14 +29,13 @@ export default function UserNavbar() {
       }`}
     >
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
-        {/* Logo & Burger Menu */}
-        <div className="flex items-center gap-3 flex-1">
+        {/* Logo & Navigation Links */}
+        <div className="flex items-center gap-6 flex-1">
+          {/* Burger Menu (Mobile) */}
           {stateContext.userLogin && (
             <button
               className="md:hidden cursor-pointer"
-              onClick={() =>
-                stateContext.setSidebarOpen?.((prev) => !prev)
-              } // Toggle sidebar
+              onClick={() => stateContext.setSidebarOpen?.((prev) => !prev)}
             >
               <Menu
                 size={28}
@@ -47,17 +46,57 @@ export default function UserNavbar() {
 
           {/* Logo */}
           <div
-            className={`text-xl sm:text-2xl font-bold cursor-pointer ${
-              stateContext.theme ? "text-navy-700" : "text-white"
-            }`}
-            onClick={() => navigate("/admin")}
+            className="cursor-pointer flex items-center gap-2"
+            onClick={() => navigate("/")}
           >
-            <Apple /> Fidel Phone
+            <img src="/logo.PNG" alt="Fidel Phone Logo" className="h-10" />
           </div>
+
+          {/* Products & About (di samping logo) */}
+          <ul className="hidden md:flex items-center gap-6">
+            {/* Products */}
+            <li>
+              <button
+                className="text-sm font-medium hover:text-blue-600 transition"
+                onClick={() => navigate("/products")}
+              >
+                Products
+              </button>
+            </li>
+
+            {/* About */}
+            <li>
+              <button
+                className="text-sm font-medium hover:text-blue-600 transition"
+                onClick={() => navigate("/about")}
+              >
+                About
+              </button>
+            </li>
+          </ul>
         </div>
 
-        {/* Menu & Theme Switch */}
-        <div className="flex gap-4 items-center">
+        {/* Search Bar & Cart */}
+        <div className="flex items-center gap-4">
+          {/* Search */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="px-3 py-1.5 text-sm border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <Search size={18} className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          </div>
+
+          {/* Cart */}
+          <button className="relative" onClick={() => navigate("/cart")}>
+            <ShoppingCart size={28} className={stateContext.theme ? "text-slate-700" : "text-white"} />
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+              0 {/* Gantilah dengan jumlah item di cart */}
+            </span>
+          </button>
+
+          {/* Auth Buttons */}
           {!stateContext.userLogin ? (
             <>
               <button
@@ -83,11 +122,7 @@ export default function UserNavbar() {
             </>
           ) : (
             <div className="hidden sm:flex items-center gap-3">
-              <p
-                className={`text-sm sm:text-base ${
-                  stateContext.theme ? "text-gray-800" : "text-white"
-                }`}
-              >
+              <p className={`text-sm sm:text-base ${stateContext.theme ? "text-gray-800" : "text-white"}`}>
                 {stateContext.userLogin.email}
               </p>
               <button
