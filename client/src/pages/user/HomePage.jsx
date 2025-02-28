@@ -6,25 +6,28 @@ import ProductList from "../../components/user/ProductList";
 import { Filter, ArrowDownAZ, ArrowUpAZ, ArrowUpDown } from "lucide-react";
 
 export default function HomePage() {
+  const { products, totalProducts } = useSelector((state) => state.app);
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.app);
 
   const [queries, setQueries] = useState({
     filterCategory: "",
     sortPrice: "",
+    pageSize: 8,
+    pageNumber: 1,
   });
 
   const handleChangeQuery = (e) => {
     const { name, value } = e.target;
-    setQueries((prev) => ({ ...prev, [name]: value }));
+    setQueries({ ...queries, [name]: value });
   };
 
-  // Menggunakan useMemo untuk mencegah fetching berulang kali
-  const queryParams = useMemo(() => queries, [queries]);
-
   useEffect(() => {
-    dispatch(getProductsThunk(queryParams));
-  }, [queryParams, dispatch]);
+    if (queries) {
+      dispatch(getProductsThunk(queries));
+    } else {
+      dispatch(getProductsThunk());
+    }
+  }, [queries]);
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 py-6">
@@ -69,6 +72,39 @@ export default function HomePage() {
       <div className="container mx-auto">
         <ProductList products={products} />
       </div>
+      <button
+              onClick={() => {
+                if (queries.pageNumber > 1) {
+                  setQueries({
+                    ...queries,
+                    pageNumber: queries.pageNumber - 1,
+                  });
+                }
+              }}
+              className="px-4 py-2 text-sm rounded-md border"
+            >
+              &lt;
+            </button>
+            <p className="text-gray-400 text-sm italic">
+              Page: {queries.pageNumber} of{" "}
+              {Math.ceil(totalProducts / queries.pageSize)}
+            </p>
+            <button
+              onClick={() => {
+                if (
+                  queries.pageNumber <
+                  Math.ceil(totalProducts / queries.pageSize)
+                ) {
+                  setQueries({
+                    ...queries,
+                    pageNumber: queries.pageNumber + 1,
+                  });
+                }
+              }}
+              className="px-4 py-2 text-sm rounded-md border"
+            >
+              &gt;
+            </button>
     </div>
     </div>
   );

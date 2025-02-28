@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export const appSlice = createSlice({
@@ -7,6 +7,7 @@ export const appSlice = createSlice({
   initialState: {
     value: 0,
     products: [],
+    totalProducts: 0,
   },
   reducers: {
     increment: (state) => {
@@ -26,6 +27,9 @@ export const appSlice = createSlice({
     onFetchProductSuccess: (state, action) => {
       state.products = action.payload;
     },
+    changeTotalProducts: (state, action) => {
+      state.totalProducts = action.payload;
+    },
   },
 });
 
@@ -35,11 +39,12 @@ export const {
   decrement,
   incrementByAmount,
   onFetchProductSuccess,
+  changeTotalProducts,
 } = appSlice.actions;
 
 export default appSlice.reducer;
 
-export const getProductsThunk = (params) => async (dispatch) => {
+export const getProductsThunk = (params = {}) => async (dispatch) => {
   try {
     let q = collection(db, "products");
 
@@ -49,6 +54,23 @@ export const getProductsThunk = (params) => async (dispatch) => {
 
     if (params?.sortPrice) {
       q = query(q, orderBy("price", params.sortPrice));
+    }
+
+    // check total diawal dan ketika di filter
+    const querySnapshotSize = (await getDocs(q)).size;
+    dispatch(changeTotalProducts(querySnapshotSize));
+
+    q = query(q, limit(params.pageSize));
+
+    if (params.pageNumber > 1) {
+      const prevPageSnapshot = await getDocs(
+        query(q, limit((params.pageNumber - 1) * params.pageSize))
+      );
+
+      const lastVisible =
+        prevPageSnapshot.docs[prevPageSnapshot.docs.length - 1];
+
+      q = query(q, startAfter(lastVisible), limit(params.pageSize));
     }
 
 
