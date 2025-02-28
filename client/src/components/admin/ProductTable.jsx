@@ -38,6 +38,9 @@ export default function ProductTable({ products, handleDelete }) {
             <th className="px-4 py-3 text-center sm:table-cell">
               Product Image
             </th>
+            <th className="px-4 py-3 text-center sm:table-cell">
+              Product Image
+            </th>
             <th className="px-4 py-3 sm:table-cell text-center">Description</th>
             <th className="px-4 py-3 text-center">Action</th>
           </tr>
@@ -61,6 +64,14 @@ export default function ProductTable({ products, handleDelete }) {
               <td className="px-4 py-3 sm:table-cell place-items-center">
                 <img
                   src={product.imageUrl}
+                  alt={product.name}
+                  className="w-14 h-14 object-cover"
+                />
+              </td>
+
+              <td className="px-4 py-3 sm:table-cell place-items-center">
+                <img
+                  src={product.image_bg}
                   alt={product.name}
                   className="w-14 h-14 object-cover"
                 />

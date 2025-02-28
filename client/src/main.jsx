@@ -14,6 +14,7 @@ import HomePage from "./pages/user/HomePage.jsx";
 import RootLayout from "./pages/user/RootLayout.jsx";
 import Auth from "./pages/Auth.jsx";
 import ProductDetail from "./pages/user/ProductsDetail.jsx";
+import Products from "./pages/user/ProductsPage.jsx";
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
           },
           { path: "login", element: <LoginPage /> },
           { path: "register", element: <RegisterPage /> },
+          { path: "products", element: <Products /> },
         ],
       },
     ],

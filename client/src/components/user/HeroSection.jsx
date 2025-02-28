@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -34,6 +35,7 @@ function PrevArrow(props) {
 
 export default function HeroSection() {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
   const { products } = useSelector((state) => state.app);
 
   useEffect(() => {
@@ -64,8 +66,11 @@ export default function HeroSection() {
             />
             <div className="absolute inset-0 bg-black/10 bg-opacity-40 flex flex-col justify-center items-center text-white px-6 text-center">
               <h2 className="text-4xl font-bold">{product.name}</h2>
-              <p className="mt-2 text-lg">{product.description}</p>
-              <button className="mt-4 px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition">
+              <p className="mx-8 my-2 text-lg">{product.description.split(/\s*[-–—]\s*/)[0]}</p>
+              <button
+                onClick={() => navigate(`/product/${product.id}`)} // Navigasi ke halaman detail produk
+                className="mt-4 px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition"
+              >
                 Shop Now
               </button>
             </div>

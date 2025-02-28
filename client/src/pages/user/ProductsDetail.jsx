@@ -17,7 +17,9 @@ export default function ProductDetail() {
 
   // Jika data masih loading
   if (loading) {
-    return <p className="text-center text-blue-500 mt-10">Loading product...</p>;
+    return (
+      <p className="text-center text-blue-500 mt-10">Loading product...</p>
+    );
   }
 
   // Cari produk berdasarkan ID setelah data tersedia
@@ -42,7 +44,22 @@ export default function ProductDetail() {
         {/* Detail Produk */}
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
-          <p className="text-gray-700 text-lg">{product.description}</p>
+          <div>
+            {/* desc Produk */}
+            <h2 className="text-xl text-gray-800">
+              {product.description.split(" - ")[0]}
+            </h2>
+
+            {/* List Fitur */}
+            <ul className="list-disc list-inside text-gray-700 mt-2">
+              {product.description
+                .split(" - ")
+                .slice(1)
+                .map((feature, index) => (
+                  <li key={index}>{feature.trim()}</li>
+                ))}
+            </ul>
+          </div>
           <span className="text-2xl font-semibold text-blue-600">
             Rp {product.price.toLocaleString("id-ID")}
           </span>

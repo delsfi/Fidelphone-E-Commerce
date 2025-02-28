@@ -10,15 +10,15 @@ import { AuthContext } from "../../pages/Auth";
 export default function ProductForm({ productById, productId }) {
   const [input, setInput] = useState({
     name: "",
-    price: "",
+    price: 0,
     imageUrl: "",
+    image_bg: "", // Tambahkan image_bg di state
     description: "",
     category: "",
   });
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [isImageUploaded, setIsImageUploaded] = useState(false);
   const stateContext = useContext(AuthContext);
 
   const changeInput = (e) => {
@@ -26,9 +26,14 @@ export default function ProductForm({ productById, productId }) {
     setInput({ ...input, [name]: value });
   };
 
+  // Fungsi untuk menangani unggahan gambar produk utama
   const handleImageUpload = (url) => {
     setInput((prev) => ({ ...prev, imageUrl: url }));
-    setIsImageUploaded(true);
+  };
+
+  // Fungsi untuk menangani unggahan gambar latar belakang (image_bg)
+  const handleBgImageUpload = (url) => {
+    setInput((prev) => ({ ...prev, image_bg: url }));
   };
 
   const handleOnSubmit = async (e) => {
@@ -56,12 +61,12 @@ export default function ProductForm({ productById, productId }) {
   useEffect(() => {
     if (productById) {
       setInput(productById);
-      if (productById.imageUrl) setIsImageUploaded(true);
     } else {
       setInput({
         name: "",
         price: "",
         imageUrl: "",
+        image_bg: "",
         description: "",
         category: "",
       });
@@ -72,7 +77,7 @@ export default function ProductForm({ productById, productId }) {
     <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-start gap-6 p-3">
       {/* Form */}
       <div
-        className={`w-full sm:w-1/2 max-w-md sm:max-w-none transition-all duration-300 ${
+        className={`w-full sm:w-1/2 max-w-md transition-all duration-300 ${
           stateContext.theme
             ? "bg-white text-gray-800"
             : "bg-gray-900 text-gray-300"
@@ -126,10 +131,9 @@ export default function ProductForm({ productById, productId }) {
             />
           </div>
 
-          {/* Image Upload */}
-          {/* Image Upload */}
+          {/* Product Image Upload */}
           <div>
-            <label className="block text-sm font-medium">Image</label>
+            <label className="block text-sm font-medium">Product Image</label>
             <div className="flex gap-2">
               <input
                 value={input.imageUrl}
@@ -139,12 +143,32 @@ export default function ProductForm({ productById, productId }) {
                     ? "border-gray-300 bg-white text-gray-900"
                     : "border-gray-600 bg-gray-700 text-gray-200"
                 }`}
-                readOnly // Tidak bisa diketik manual, tapi bisa upload lagi
+                readOnly
               />
               <UploadWidget onImageUpload={handleImageUpload} />
             </div>
           </div>
-          
+
+          {/* Background Image Upload */}
+          <div>
+            <label className="block text-sm font-medium">
+              Background Image
+            </label>
+            <div className="flex gap-2">
+              <input
+                value={input.image_bg}
+                name="image_bg"
+                className={`mt-1 p-2 flex-1 border rounded-md transition ${
+                  stateContext.theme
+                    ? "border-gray-300 bg-white text-gray-900"
+                    : "border-gray-600 bg-gray-700 text-gray-200"
+                }`}
+                readOnly
+              />
+              <UploadWidget onImageUpload={handleBgImageUpload} />
+            </div>
+          </div>
+
           {/* Description */}
           <div>
             <label className="block text-sm font-medium">Description</label>
@@ -152,48 +176,59 @@ export default function ProductForm({ productById, productId }) {
               onChange={changeInput}
               value={input.description}
               name="description"
-              rows="4"
+              rows="6"
               className={`mt-1 block w-full p-2 border rounded-md transition ${
                 stateContext.theme
                   ? "border-gray-300 bg-white text-gray-900"
                   : "border-gray-600 bg-gray-700 text-gray-200"
               }`}
+              placeholder="Contoh: &#10;• Prosesor: Snapdragon 8 Gen 2 &#10;• RAM: 12GB &#10;• Kamera: 108MP + 12MP Ultrawide"
             ></textarea>
           </div>
 
           {/* Submit Button */}
           <div className="flex justify-end items-center gap-5">
-            <div className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-white cursor-pointer" onClick={() => navigate("/admin")}>
+            <div
+              className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-white cursor-pointer"
+              onClick={() => navigate("/admin")}
+            >
               Cancel
             </div>
-          <button
-            type="submit"
-            className={`px-4 py-2 rounded-md transition flex items-center justify-center gap-2 shadow-md cursor-pointer ${
-              stateContext.theme
-                ? "bg-blue-600 text-white hover:bg-blue-500"
-                : "bg-blue-600 text-white hover:bg-blue-500"
-            }`}
-          >
-            {isLoading ? (
-              <LoaderCircle className="animate-spin" size={24} />
-            ) : (
-              "Submit"
-            )}
-          </button>
+            <button
+              type="submit"
+              className={`px-4 py-2 rounded-md transition flex items-center justify-center gap-2 shadow-md cursor-pointer ${
+                stateContext.theme
+                  ? "bg-blue-600 text-white hover:bg-blue-500"
+                  : "bg-blue-600 text-white hover:bg-blue-500"
+              }`}
+            >
+              {isLoading ? (
+                <LoaderCircle className="animate-spin" size={24} />
+              ) : (
+                "Submit"
+              )}
+            </button>
           </div>
         </form>
       </div>
 
       {/* Image Preview */}
-      {input.imageUrl && (
-        <div className="w-full sm:w-1/3 flex justify-center sm:block">
+      <div className="w-full sm:w-1/3 flex flex-col items-center gap-4">
+        {input.imageUrl && (
           <img
             src={input.imageUrl}
-            alt="Uploaded"
+            alt="Product"
             className="w-40 h-40 sm:w-64 sm:h-64 object-cover"
           />
-        </div>
-      )}
+        )}
+        {input.image_bg && (
+          <img
+            src={input.image_bg}
+            alt="Background"
+            className="w-40 h-40 sm:w-64 sm:h-64 object-cover"
+          />
+        )}
+      </div>
     </div>
   );
 }
