@@ -1,6 +1,63 @@
 import { Link } from "react-router-dom";
+import { collection, addDoc, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import { db } from "../../config/firebase";
+import { AuthContext } from "../../pages/Auth";
+import { useDispatch } from "react-redux";
+import { getCartsThunk } from "../../store/appSlice";
 
 export default function ProductCard({ product }) {
+  const { userLogin } = useContext(AuthContext); // Ambil user login dari context
+
+  // Fungsi untuk menambahkan produk ke cart
+  const dispatch = useDispatch(); // Gunakan Redux dispatch
+
+const handleAddToCart = async (e) => {
+  e.preventDefault(); // Mencegah Link berpindah halaman saat tombol diklik
+
+  if (!userLogin) {
+    toast.error("Silakan login terlebih dahulu!");
+    return;
+  }
+
+  try {
+    const cartRef = collection(db, "carts");
+
+    // Cek apakah produk sudah ada di cart user
+    const q = query(cartRef, where("userId", "==", userLogin.uid), where("productId", "==", product.id));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // Jika produk sudah ada, update quantity
+      const cartDoc = querySnapshot.docs[0]; // Ambil dokumen pertama
+      const cartData = cartDoc.data();
+      const newQuantity = cartData.quantity + 1; // Tambah quantity
+
+      await updateDoc(doc(db, "carts", cartDoc.id), { quantity: newQuantity });
+      toast.success("Quantity produk ditambahkan!");
+    } else {
+      // Jika produk belum ada, tambahkan produk baru ke cart
+      await addDoc(cartRef, {
+        userId: userLogin.uid, // ID pengguna
+        productId: product.id, // ID produk
+        name: product.name,
+        imageUrl: product.imageUrl,
+        price: product.price,
+        quantity: 1, // Default 1
+      });
+
+      toast.success("Produk berhasil ditambahkan ke keranjang!");
+    }
+
+    // 🔥 Panggil Redux action untuk memperbarui Redux state
+    dispatch(getCartsThunk(userLogin.uid)); 
+  } catch (error) {
+    console.error("Gagal menambahkan ke cart:", error);
+    toast.error("Gagal menambahkan ke keranjang!");
+  }
+};
+
   return (
     <Link to={`/product/${product.id}`} className="block">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer">
@@ -21,8 +78,11 @@ export default function ProductCard({ product }) {
             <span className="text-lg font-bold text-gray-900">
               Rp {product.price.toLocaleString("id-ID")}
             </span>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition">
-              Buy Now
+            <button
+              onClick={handleAddToCart} // Tambahkan event handler
+              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition"
+            >
+              Add to Cart
             </button>
           </div>
         </div>

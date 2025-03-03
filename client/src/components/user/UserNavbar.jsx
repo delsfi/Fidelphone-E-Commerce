@@ -5,20 +5,31 @@ import { auth } from "../../config/firebase";
 import { useContext } from "react";
 import { Moon, Sun, Menu, LogOut, ShoppingCart, Search } from "lucide-react";
 import { AuthContext } from "../../pages/Auth";
+import { useDispatch, useSelector } from "react-redux";
+import { resetCartSuccess } from "../../store/appSlice";
 
 export default function UserNavbar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const stateContext = useContext(AuthContext);
+  const { carts } = useSelector((state) => state.app); // Ambil cart dari Redux
+  const totalCartItems = carts.reduce(
+    (total, item) => total + item.quantity,
+    0
+  ); // Hitung total item
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      dispatch(resetCartSuccess());
       navigate("/login");
       toast.success("Logout Success");
     } catch (error) {
       console.log(error);
     }
   };
+
+
 
   return (
     <nav
@@ -85,15 +96,23 @@ export default function UserNavbar() {
               placeholder="Search..."
               className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <Search size={18} className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            <Search
+              size={18}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+            />
           </div>
 
           {/* Cart */}
           <button className="relative" onClick={() => navigate("/cart")}>
-            <ShoppingCart size={28} className={stateContext.theme ? "text-slate-700" : "text-white"} />
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-              0 {/* Gantilah dengan jumlah item di cart */}
-            </span>
+            <ShoppingCart
+              size={28}
+              className={stateContext.theme ? "text-slate-700" : "text-white"}
+            />
+            {totalCartItems > 0 && ( // Tampilkan hanya jika ada item di cart
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {totalCartItems}
+              </span>
+            )}
           </button>
 
           {/* Auth Buttons */}
@@ -122,7 +141,11 @@ export default function UserNavbar() {
             </>
           ) : (
             <div className="hidden sm:flex items-center gap-3">
-              <p className={`text-sm sm:text-base ${stateContext.theme ? "text-gray-800" : "text-white"}`}>
+              <p
+                className={`text-sm sm:text-base ${
+                  stateContext.theme ? "text-gray-800" : "text-white"
+                }`}
+              >
                 {stateContext.userLogin.email}
               </p>
               <button

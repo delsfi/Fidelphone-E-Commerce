@@ -204,7 +204,7 @@ export default function LoginPage() {
           Don't have an account?{" "}
           <span
             className="text-slate-500 hover:underline cursor-pointer"
-            onClick={() => navigate("/admin/register")}
+            onClick={() => navigate("/register")}
           >
             Sign up
           </span>
