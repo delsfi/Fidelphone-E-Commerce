@@ -27,6 +27,8 @@ export default function Products() {
   
     const totalPages = Math.ceil(totalProducts / queries.pageSize);
 
+    // const categories = [...new Set(products.map((product) => product.category))];
+
   return (
     <div className="max-w-screen-xl mx-auto mb-3">
 
@@ -45,6 +47,7 @@ export default function Products() {
               <option value="samsung">Samsung</option>
               <option value="xiaomi">Xiaomi</option>
               <option value="vivo">Vivo</option>
+              <option value="oppo">Oppo</option>
             </select>
           </div>
 

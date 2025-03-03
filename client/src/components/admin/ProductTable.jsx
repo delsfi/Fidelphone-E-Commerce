@@ -79,7 +79,9 @@ export default function ProductTable({ products, handleDelete }) {
 
               {/* Description - Hidden on Mobile */}
               <td className="px-4 py-3 sm:table-cell">
-                {product.description}
+                {product.description.length > 50
+                  ? product.description.slice(0, 50) + "..."
+                  : product.description}
               </td>
 
               {/* Action Buttons */}

@@ -45,21 +45,22 @@ export default function ProductDetail() {
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
           <div>
-            {/* desc Produk */}
-            <h2 className="text-xl text-gray-800">
-              {product.description.split(" - ")[0]}
+            {/* Judul Produk */}
+            <h2 className=" text-justify font-semibold text-gray-600">
+              {product.description.split("\n")[0]}
             </h2>
 
             {/* List Fitur */}
-            <ul className="list-disc list-inside text-gray-700 mt-2">
+            <ul className="list-none list-inside text-gray-700 mt-2">
               {product.description
-                .split(" - ")
-                .slice(1)
+                .split("\n")
+                .slice(1) // Mengambil semua baris kecuali judul
                 .map((feature, index) => (
                   <li key={index}>{feature.trim()}</li>
                 ))}
             </ul>
           </div>
+
           <span className="text-2xl font-semibold text-blue-600">
             Rp {product.price.toLocaleString("id-ID")}
           </span>

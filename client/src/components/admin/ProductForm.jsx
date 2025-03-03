@@ -23,7 +23,10 @@ export default function ProductForm({ productById, productId }) {
 
   const changeInput = (e) => {
     const { value, name } = e.target;
-    setInput({ ...input, [name]: value });
+    setInput({
+      ...input,
+      [name]: name === "price" ? Number(value) : value, // Konversi hanya untuk price
+    });
   };
 
   // Fungsi untuk menangani unggahan gambar produk utama
@@ -120,7 +123,7 @@ export default function ProductForm({ productById, productId }) {
             <label className="block text-sm font-medium">Price</label>
             <input
               onChange={changeInput}
-              value={input.price}
+              value={input.price || ""} // Agar tidak muncul "NaN" jika kosong
               name="price"
               type="number"
               className={`mt-1 block w-full p-2 border rounded-md transition ${
@@ -182,7 +185,6 @@ export default function ProductForm({ productById, productId }) {
                   ? "border-gray-300 bg-white text-gray-900"
                   : "border-gray-600 bg-gray-700 text-gray-200"
               }`}
-              placeholder="Contoh: &#10;• Prosesor: Snapdragon 8 Gen 2 &#10;• RAM: 12GB &#10;• Kamera: 108MP + 12MP Ultrawide"
             ></textarea>
           </div>
 
