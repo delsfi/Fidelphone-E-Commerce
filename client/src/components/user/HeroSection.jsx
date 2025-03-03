@@ -71,7 +71,7 @@ export default function HeroSection() {
                 onClick={() => navigate(`/product/${product.id}`)} // Navigasi ke halaman detail produk
                 className="mt-4 px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition"
               >
-                Shop Now
+                Read Now
               </button>
             </div>
           </div>

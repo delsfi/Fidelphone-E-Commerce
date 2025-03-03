@@ -1,38 +1,25 @@
 import { useEffect, useContext } from "react";
 import { AuthContext } from "../Auth";
 import { Outlet, useNavigate } from "react-router-dom";
-import AdminNavbar from "../../components/admin/AdminNavbar";
 import { ToastContainer } from "react-toastify";
-import AdminSidebar from "../../components/admin/AdminSidebar";
 import UserNavbar from "../../components/user/UserNavbar";
 
 export default function RootLayout() {
-  const { userLogin, role } = useContext(AuthContext);
+  const { userLogin, role, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    if (role === "admin" || role === "superadmin") {
-      navigate("/admin");
-    } else if (role) {
-      navigate("/");
+    if (!loading) { // Tunggu Firebase selesai memuat user
+      if (role === "admin" || role === "superadmin") {
+        navigate("/admin");
+      }
     }
-  }, [role]);
-
-  // useEffect(() => {
-  //   if (!userLogin) {
-  //     navigate("/login");
-  //   }
-  // }, [userLogin]); // Akan dijalankan saat `userLogin` berubah
+  }, [role, loading, navigate]); // Tambahkan `loading` ke dependency array
 
   return (
     <>
       <UserNavbar />
-
-
-        <Outlet />
-
-
+      <Outlet />
       <ToastContainer />
     </>
   );

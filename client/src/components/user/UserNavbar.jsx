@@ -32,6 +32,7 @@ export default function UserNavbar() {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${searchQuery}`);
+      setSearchQuery("");
     }
   };
 

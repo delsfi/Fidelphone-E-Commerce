@@ -20,6 +20,7 @@ export default function SearchPage() {
   }, [query, products]);
 
   return (
+    <div className="max-w-screen-xl mx-auto mb-3">
     <div className="container mx-auto p-4">
       <h2 className="text-xl font-bold mb-4">Search results for: "{query}"</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -31,6 +32,7 @@ export default function SearchPage() {
           <p>No results found.</p>
         )}
       </div>
+    </div>
     </div>
   );
 }

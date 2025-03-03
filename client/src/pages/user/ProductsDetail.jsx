@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsThunk, getCartsThunk } from "../../store/appSlice";
-import { ShoppingCart } from "lucide-react";
+import { ArrowLeftCircle, ArrowLeftIcon, Backpack, ShoppingCart } from "lucide-react";
 import { collection, addDoc, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { toast } from "react-toastify";
@@ -14,6 +14,7 @@ export default function ProductDetail() {
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.app);
   const { userLogin } = useContext(AuthContext); // Ambil user login dari context
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (products.length === 0) {
@@ -31,6 +32,10 @@ export default function ProductDetail() {
 
   if (!product) {
     return <p className="text-center text-red-500 mt-10">Product not found.</p>;
+  }
+
+  const handleBack = () => {
+    navigate("/");
   }
 
   // Handle Add to Cart
@@ -79,6 +84,10 @@ export default function ProductDetail() {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
+      <button onClick={handleBack}>
+      <ArrowLeftIcon />
+      </button>
+      
       <div className="grid md:grid-cols-2 gap-8">
         {/* Gambar Produk */}
         <div className="bg-white shadow-lg p-4 rounded-lg">
