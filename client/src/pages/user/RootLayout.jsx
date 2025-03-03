@@ -7,22 +7,23 @@ import AdminSidebar from "../../components/admin/AdminSidebar";
 import UserNavbar from "../../components/user/UserNavbar";
 
 export default function RootLayout() {
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin, role } = useContext(AuthContext);
   const navigate = useNavigate();
-  const {
-    theme,
-    changeTheme,
-    loading,
-    sidebarOpen,
-    setSidebarOpen,
-    role,
-  } = useContext(AuthContext);
+
 
   useEffect(() => {
-    if (!userLogin) {
-      navigate("/login");
+    if (role === "admin" || role === "superadmin") {
+      navigate("/admin");
+    } else if (role) {
+      navigate("/");
     }
-  }, [userLogin]); // Akan dijalankan saat `userLogin` berubah
+  }, [role]);
+
+  // useEffect(() => {
+  //   if (!userLogin) {
+  //     navigate("/login");
+  //   }
+  // }, [userLogin]); // Akan dijalankan saat `userLogin` berubah
 
   return (
     <>

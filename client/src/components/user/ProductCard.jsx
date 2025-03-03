@@ -13,6 +13,7 @@ export default function ProductCard({ product }) {
   // Fungsi untuk menambahkan produk ke cart
   const dispatch = useDispatch(); // Gunakan Redux dispatch
 
+
 const handleAddToCart = async (e) => {
   e.preventDefault(); // Mencegah Link berpindah halaman saat tombol diklik
 
@@ -57,6 +58,7 @@ const handleAddToCart = async (e) => {
     toast.error("Gagal menambahkan ke keranjang!");
   }
 };
+
 
   return (
     <Link to={`/product/${product.id}`} className="block">

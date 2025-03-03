@@ -29,19 +29,22 @@ const AuthProvider = () => {
         if (docSnap.exists()) {
           setRole(docSnap.data().role);
         }
-
+  
         setUserLogin(user);
-
-        // 🔥 Langsung perbarui Redux state untuk cart setelah login
+  
+        // 🔥 Ambil data cart setelah login
         dispatch(getCartsThunk(user.uid));
       } else {
         setUserLogin(null);
+        setRole(null); // 🔥 Reset role agar tidak ada data lama tersisa
+        dispatch(getCartsThunk(null)); // 🔥 Reset cart di Redux saat logout
       }
       setLoading(false);
     });
-
+  
     return () => unsubscribe();
   }, [dispatch]);
+  
 
   return (
     <AuthContext.Provider
@@ -49,10 +52,12 @@ const AuthProvider = () => {
         theme,
         changeTheme,
         userLogin,
+        setUserLogin,
         loading,
         sidebarOpen,
         setSidebarOpen,
         role,
+        setRole,
       }}
     >
       <Outlet />

@@ -5,20 +5,34 @@ import { auth } from "../../config/firebase";
 import { useContext } from "react";
 import { Moon, Sun, Menu, LogOut } from "lucide-react";
 import { AuthContext } from "../../pages/Auth";
+import { useDispatch } from "react-redux";
+import { getCartsThunk } from "../../store/appSlice";
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
   const stateContext = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
+  
+      // 🔥 Pastikan stateContext memiliki fungsi ini setelah diperbaiki
+      stateContext.setUserLogin(null);
+      stateContext.setRole(null); 
+  
+      dispatch(getCartsThunk(null)); // 🔥 Reset cart di Redux
+  
       navigate("/login");
       toast.success("Logout Success");
     } catch (error) {
       console.log(error);
+      toast.error("Logout Failed!");
     }
   };
+  
+  
+  
 
   return (
     <nav
