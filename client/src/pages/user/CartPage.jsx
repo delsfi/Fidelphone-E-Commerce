@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { getCartsThunk, removeFromCartThunk, updateCartQuantityThunk } from "../../store/appSlice";
 import { AuthContext } from "../Auth";
 import { MinusCircle, PlusCircle, ShoppingCart, Trash2 } from "lucide-react";
+import Footer from "../../components/user/Footer";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export default function CartPage() {
   const totalPrice = carts.reduce((total, cart) => total + cart.price * cart.quantity, 0);
 
   return (
+    <>
     <div className="max-w-screen-xl mx-auto mb-3">
       <h2 className="text-2xl font-bold mb-6 mt-3"> Cart Shooping</h2>
 
@@ -110,5 +112,7 @@ export default function CartPage() {
         </div>
       )}
     </div>
+    <Footer />
+    </>
   );
 }

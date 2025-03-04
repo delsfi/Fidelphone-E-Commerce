@@ -3,7 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../../config/firebase";
 import { useContext, useState } from "react";
-import { Moon, Sun, Menu, LogOut, ShoppingCart, Search } from "lucide-react";
+import {
+  Moon,
+  Sun,
+  Menu,
+  LogOut,
+  ShoppingCart,
+  Search,
+  X,
+  LogOutIcon,
+} from "lucide-react";
 import { AuthContext } from "../../pages/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCartSuccess } from "../../store/appSlice";
@@ -13,16 +22,20 @@ export default function UserNavbar() {
   const dispatch = useDispatch();
   const stateContext = useContext(AuthContext);
   const { carts } = useSelector((state) => state.app);
-  const totalCartItems = carts.reduce((total, item) => total + item.quantity, 0);
+  const totalCartItems = carts.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
       dispatch(resetCartSuccess());
       navigate("/login");
-      toast.success("Logout Success");
+      toast.success("Logout Berhasil");
     } catch (error) {
       console.log(error);
     }
@@ -45,34 +58,38 @@ export default function UserNavbar() {
       }`}
     >
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
-        {/* Left Section (Logo & Links) */}
-        <div className="flex items-center gap-6 flex-1">
-          {/* Sidebar Toggle for Mobile */}
+        {/* Bagian Kiri */}
+        <div className="flex items-center gap-4 flex-1">
+          {/* Tombol Menu Mobile */}
           {stateContext.userLogin && (
             <button
               className="md:hidden cursor-pointer"
-              onClick={() => stateContext.setSidebarOpen?.((prev) => !prev)}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <Menu
-                size={28}
-                className={stateContext.theme ? "text-slate-700" : "text-white"}
-              />
+              {isMenuOpen ? (
+                <X size={28} className="text-slate-700" />
+              ) : (
+                <Menu size={28} className="text-slate-700" />
+              )}
             </button>
           )}
 
           {/* Logo */}
-          <div className="cursor-pointer flex items-center gap-2" onClick={() => navigate("/")}>
+          <div
+            className="cursor-pointer flex items-center gap-2"
+            onClick={() => navigate("/")}
+          >
             <img src="/logo.PNG" alt="Fidel Phone Logo" className="h-10" />
           </div>
 
-          {/* Navigation Links */}
+          {/* Menu Navigasi (Desktop) */}
           <ul className="hidden md:flex items-center gap-6">
             <li>
               <button
                 className="text-sm font-medium hover:text-blue-600 transition"
                 onClick={() => navigate("/products")}
               >
-                Products
+                Product
               </button>
             </li>
             <li>
@@ -86,13 +103,13 @@ export default function UserNavbar() {
           </ul>
         </div>
 
-        {/* Right Section (Search, Cart, Auth, Theme) */}
+        {/* Bagian Kanan */}
         <div className="flex items-center gap-4">
-          {/* Search Bar */}
+          {/* Pencarian */}
           <form onSubmit={handleSearch} className="relative">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Cari..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -105,7 +122,7 @@ export default function UserNavbar() {
             </button>
           </form>
 
-          {/* Cart */}
+          {/* Keranjang Belanja */}
           <button className="relative" onClick={() => navigate("/cart")}>
             <ShoppingCart
               size={28}
@@ -118,12 +135,14 @@ export default function UserNavbar() {
             )}
           </button>
 
-          {/* Auth Buttons */}
+          {/* Tombol Masuk / Keluar */}
           {!stateContext.userLogin ? (
             <>
               <button
                 className={`text-sm sm:text-base cursor-pointer ${
-                  stateContext.theme ? "text-navy-700 hover:underline" : "text-white hover:underline"
+                  stateContext.theme
+                    ? "text-navy-700 hover:underline"
+                    : "text-white hover:underline"
                 }`}
                 onClick={() => navigate("/login")}
               >
@@ -131,7 +150,9 @@ export default function UserNavbar() {
               </button>
               <button
                 className={`text-sm sm:text-base px-3 py-1 sm:px-4 sm:py-2 rounded-md cursor-pointer ${
-                  stateContext.theme ? "bg-slate-700 text-white hover:bg-slate-800" : "bg-slate-700 text-white hover:bg-slate-600"
+                  stateContext.theme
+                    ? "bg-slate-700 text-white hover:bg-slate-800"
+                    : "bg-slate-700 text-white hover:bg-slate-600"
                 }`}
                 onClick={() => navigate("/register")}
               >
@@ -140,7 +161,11 @@ export default function UserNavbar() {
             </>
           ) : (
             <div className="hidden sm:flex items-center gap-3">
-              <p className={`text-sm sm:text-base ${stateContext.theme ? "text-gray-800" : "text-white"}`}>
+              <p
+                className={`text-sm sm:text-base ${
+                  stateContext.theme ? "text-gray-800" : "text-white"
+                }`}
+              >
                 {stateContext.userLogin.email}
               </p>
               <button
@@ -153,7 +178,7 @@ export default function UserNavbar() {
             </div>
           )}
 
-          {/* Theme Switch */}
+          {/* Tombol Tema */}
           <button onClick={stateContext.changeTheme} className="p-1">
             {stateContext.theme ? (
               <Sun size={28} className="text-slate-700" />
@@ -163,6 +188,43 @@ export default function UserNavbar() {
           </button>
         </div>
       </div>
+
+      {/* Menu Navigasi (Mobile) */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white shadow-md p-4">
+          <ul className="flex flex-col space-y-3">
+            <li>
+              <button
+                className="text-sm font-medium hover:text-blue-600 transition"
+                onClick={() => navigate("/products")}
+              >
+                Product
+              </button>
+            </li>
+            <li>
+              <button
+                className="text-sm font-medium hover:text-blue-600 transition"
+                onClick={() => navigate("/about")}
+              >
+                About
+              </button>
+            </li>
+            {stateContext.userLogin && (
+              <li>
+                <div className="flex gap-1">
+                  <LogOutIcon color="red" size={22} />
+                  <button
+                    className="text-sm font-medium text-red-500 hover:text-red-600 transition"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }

@@ -4,6 +4,7 @@ import { getProductsThunk } from "../../store/appSlice";
 import ProductCard from "../../components/user/ProductCard";
 import { ChevronLeft, ChevronRight, ArrowUpDown, Filter } from "lucide-react";
 import ProductList from "../../components/user/ProductList";
+import Footer from "../../components/user/Footer";
 
 export default function Products() {
     const { products, totalProducts } = useSelector((state) => state.app);
@@ -30,6 +31,7 @@ export default function Products() {
     // const categories = [...new Set(products.map((product) => product.category))];
 
   return (
+    <>
     <div className="max-w-screen-xl mx-auto mb-3">
 
         {/* Filter & Sort Section */}
@@ -112,5 +114,6 @@ export default function Products() {
           </button>
         </div>
       </div>
+      </>
   );
 }

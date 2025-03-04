@@ -36,7 +36,7 @@ export default function Footer() {
             {/* Payment Methods */}
             <div>
               <h3 className="text-lg font-semibold mb-3">Metode Pembayaran</h3>
-              <img src="https://lh3.googleusercontent.com/eQF_1I0DByxOoDn-8XbCcScOXvwyIiOX4FM4CbdzEWbLMzO2We81GDlsCHIW7UJS5f6g-WtYPq8K4WhM-6xSJh7V8YJEhBxZW3tOHl6X3h4EDzD1usmK-xaNUlxXs4kCw_qxutTb-86aG_Twuu6I3Q" alt="Payment Methods" className="max-w-[380px]" />
+              <img src="/image1.png" alt="Payment Methods" className="max-w-[380px]" />
             </div>
           </div>
   

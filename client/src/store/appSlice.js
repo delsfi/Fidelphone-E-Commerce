@@ -202,3 +202,20 @@ export const updateCartQuantityThunk = (cartId, newQuantity) => async (dispatch)
     console.log("Error updating cart quantity:", error);
   }
 };
+
+export const getAllProductsThunk = () => async (dispatch) => {
+  try {
+    const q = collection(db, "products"); // Ambil semua produk tanpa pagination
+    const querySnapshot = await getDocs(q);
+
+    let data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+
+    dispatch(onFetchProductSuccess(data)); // Simpan ke Redux
+  } catch (error) {
+    console.error("Error fetching all products:", error);
+  }
+};
+
