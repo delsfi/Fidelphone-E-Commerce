@@ -84,7 +84,6 @@ export default function ProductTable({ products, handleDelete }) {
                   : product.description}
               </td>
 
-              {/* Action Buttons */}
               <td className="px-4 py-3">
                 <div className="flex flex-col sm:flex-row gap-2 justify-center">
                   <button

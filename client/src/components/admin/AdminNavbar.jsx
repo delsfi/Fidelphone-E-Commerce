@@ -17,11 +17,10 @@ export default function AdminNavbar() {
     try {
       await signOut(auth);
   
-      // 🔥 Pastikan stateContext memiliki fungsi ini setelah diperbaiki
       stateContext.setUserLogin(null);
       stateContext.setRole(null); 
   
-      dispatch(getCartsThunk(null)); // 🔥 Reset cart di Redux
+      dispatch(getCartsThunk(null)); //Reset cart di Redux
   
       navigate("/login");
       toast.success("Logout Success");

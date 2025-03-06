@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
   const { userLogin } = useContext(AuthContext); // Ambil user login dari context
 
   // Fungsi untuk menambahkan produk ke cart
-  const dispatch = useDispatch(); // Gunakan Redux dispatch
+  const dispatch = useDispatch();
 
 
 const handleAddToCart = async (e) => {
@@ -40,18 +40,18 @@ const handleAddToCart = async (e) => {
     } else {
       // Jika produk belum ada, tambahkan produk baru ke cart
       await addDoc(cartRef, {
-        userId: userLogin.uid, // ID pengguna
-        productId: product.id, // ID produk
+        userId: userLogin.uid,
+        productId: product.id,
         name: product.name,
         imageUrl: product.imageUrl,
         price: product.price,
-        quantity: 1, // Default 1
+        quantity: 1,
       });
 
       toast.success("Produk berhasil ditambahkan ke keranjang!");
     }
 
-    // 🔥 Panggil Redux action untuk memperbarui Redux state
+    // Panggil Redux action untuk memperbarui Redux state
     dispatch(getCartsThunk(userLogin.uid)); 
   } catch (error) {
     console.error("Gagal menambahkan ke cart:", error);
@@ -81,7 +81,7 @@ const handleAddToCart = async (e) => {
               Rp {product.price.toLocaleString("id-ID")}
             </span>
             <button
-              onClick={handleAddToCart} // Tambahkan event handler
+              onClick={handleAddToCart}
               className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition"
             >
               Add to Cart

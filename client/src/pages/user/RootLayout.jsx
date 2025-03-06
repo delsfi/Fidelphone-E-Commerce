@@ -3,6 +3,7 @@ import { AuthContext } from "../Auth";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import UserNavbar from "../../components/user/UserNavbar";
+import Footer from "../../components/user/Footer";
 
 export default function RootLayout() {
   const { userLogin, role, loading } = useContext(AuthContext);
@@ -14,12 +15,13 @@ export default function RootLayout() {
         navigate("/admin");
       }
     }
-  }, [role, loading, navigate]); // Tambahkan `loading` ke dependency array
+  }, [role, loading, navigate]);
 
   return (
     <>
       <UserNavbar />
       <Outlet />
+      <Footer />
       <ToastContainer />
     </>
   );

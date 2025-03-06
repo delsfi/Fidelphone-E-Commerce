@@ -126,7 +126,6 @@ export const getCartsThunk = (userId) => async (dispatch) => {
       data.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log("Cart dari Firestore:", data); // Debugging, lihat hasilnya di console
 
     dispatch(onFetchCartsSuccess(data));
   } catch (error) {
@@ -157,7 +156,7 @@ export const addToCartThunk = (userId, product) => async (dispatch) => {
       await updateDoc(cartItemRef, { quantity: newQuantity });
 
       dispatch(updateCartQuantitySuccess({ id: cartItem.id, quantity: newQuantity }));
-      toast.info("Product quantity updated in cart.");
+      toast.info("menambah jumlah produk di keranjang.");
     } else {
       // Jika produk belum ada di cart, tambahkan sebagai item baru
       const newCartItem = {
@@ -172,34 +171,34 @@ export const addToCartThunk = (userId, product) => async (dispatch) => {
       const docRef = await addDoc(cartRef, newCartItem);
 
       dispatch(addToCartSuccess({ id: docRef.id, ...newCartItem }));
-      toast.success("Product added to cart!");
+      toast.success("Produk ditambahkan ke keranjang!");
     }
   } catch (error) {
     console.log("Error adding to cart:", error);
   }
 };
 
-// **REMOVE FROM CART**
+//REMOVE FROM CART
 export const removeFromCartThunk = (cartId) => async (dispatch) => {
   try {
     await deleteDoc(doc(db, "carts", cartId));
     dispatch(removeFromCartSuccess(cartId));
-    toast.error("Product removed from cart!");
+    toast.error("Produk berhasil dihapus");
   } catch (error) {
-    console.log("Error removing from cart:", error);
+    console.log(error);
   }
 };
 
-// **UPDATE QUANTITY**
+//UPDATE QUANTITY
 export const updateCartQuantityThunk = (cartId, newQuantity) => async (dispatch) => {
   try {
     const cartRef = doc(db, "carts", cartId);
     await updateDoc(cartRef, { quantity: newQuantity });
 
     dispatch(updateCartQuantitySuccess({ id: cartId, quantity: newQuantity }));
-    toast.info("Cart updated.");
+    toast.info("Produk diperbarui");
   } catch (error) {
-    console.log("Error updating cart quantity:", error);
+    console.log(error);
   }
 };
 
@@ -213,7 +212,7 @@ export const getAllProductsThunk = () => async (dispatch) => {
       data.push({ id: doc.id, ...doc.data() });
     });
 
-    dispatch(onFetchProductSuccess(data)); // Simpan ke Redux
+    dispatch(onFetchProductSuccess(data));
   } catch (error) {
     console.error("Error fetching all products:", error);
   }

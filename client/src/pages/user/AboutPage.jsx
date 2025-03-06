@@ -1,6 +1,4 @@
-import { ArrowLeftIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import Footer from "../../components/user/Footer";
+
 
 export default function AboutPage() {
   return (
@@ -63,7 +61,6 @@ export default function AboutPage() {
         </div>
       </div>
     </div>
-    <Footer />
     </>
   );
 }

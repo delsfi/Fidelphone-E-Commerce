@@ -12,7 +12,6 @@ export default function SearchPage() {
   const query = new URLSearchParams(location.search).get("q");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  // Pastikan semua produk dimuat sebelum melakukan pencarian
   useEffect(() => {
     dispatch(getAllProductsThunk()); // Fetch semua produk
   }, [dispatch]);
@@ -50,7 +49,6 @@ export default function SearchPage() {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 }

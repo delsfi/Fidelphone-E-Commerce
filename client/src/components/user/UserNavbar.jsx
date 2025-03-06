@@ -58,7 +58,6 @@ export default function UserNavbar() {
       }`}
     >
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
-        {/* Bagian Kiri */}
         <div className="flex items-center gap-4 flex-1">
           {/* Tombol Menu Mobile */}
           {stateContext.userLogin && (
@@ -103,7 +102,6 @@ export default function UserNavbar() {
           </ul>
         </div>
 
-        {/* Bagian Kanan */}
         <div className="flex items-center gap-4">
           {/* Pencarian */}
           <form onSubmit={handleSearch} className="relative">

@@ -80,7 +80,7 @@ export default function ProductDetail() {
   // Ambil rekomendasi produk, kecuali produk yang sedang dibuka
   const recommendedProducts = products
     .filter((p) => p.id !== product.id) // Hindari produk yang sama
-    .slice(0, 4); // Ambil maksimal 4 produk untuk rekomendasi
+    .slice(0, 4); // maksimal 4 produk untuk rekomendasi
 
   return (
     <>
@@ -140,7 +140,6 @@ export default function ProductDetail() {
         </div>
       )}
     </div>
-    <Footer />
     </>
   );
 }

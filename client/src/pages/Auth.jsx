@@ -32,12 +32,12 @@ const AuthProvider = () => {
   
         setUserLogin(user);
   
-        // 🔥 Ambil data cart setelah login
+        //Ambil data cart setelah login
         dispatch(getCartsThunk(user.uid));
       } else {
         setUserLogin(null);
-        setRole(null); // 🔥 Reset role agar tidak ada data lama tersisa
-        dispatch(getCartsThunk(null)); // 🔥 Reset cart di Redux saat logout
+        setRole(null); //Reset role agar tidak ada data lama tersisa
+        dispatch(getCartsThunk(null)); //Reset cart di Redux saat logout
       }
       setLoading(false);
     });

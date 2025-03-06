@@ -12,7 +12,7 @@ export default function ProductForm({ productById, productId }) {
     name: "",
     price: 0,
     imageUrl: "",
-    image_bg: "", // Tambahkan image_bg di state
+    image_bg: "",
     description: "",
     category: "",
   });
@@ -25,16 +25,14 @@ export default function ProductForm({ productById, productId }) {
     const { value, name } = e.target;
     setInput({
       ...input,
-      [name]: name === "price" ? Number(value) : value, // Konversi hanya untuk price
+      [name]: name === "price" ? Number(value) : value,
     });
   };
 
-  // Fungsi untuk menangani unggahan gambar produk utama
   const handleImageUpload = (url) => {
     setInput((prev) => ({ ...prev, imageUrl: url }));
   };
 
-  // Fungsi untuk menangani unggahan gambar latar belakang (image_bg)
   const handleBgImageUpload = (url) => {
     setInput((prev) => ({ ...prev, image_bg: url }));
   };
