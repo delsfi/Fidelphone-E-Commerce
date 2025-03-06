@@ -13,7 +13,7 @@ function NextArrow(props) {
   return (
     <button
       onClick={onClick}
-      className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-gray-600 p-3 rounded-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
+      className="cursor-pointer absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-gray-600 p-3 rounded-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
     >
       <ChevronRight size={18} />
     </button>
@@ -26,7 +26,7 @@ function PrevArrow(props) {
   return (
     <button
       onClick={onClick}
-      className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-gray-600 p-3 rounded-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
+      className="cursor-pointer absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-gray-600 p-3 rounded-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
     >
       <ChevronLeft size={18} />
     </button>
@@ -69,7 +69,7 @@ export default function HeroSection() {
               <p className="mx-8 my-2 text-lg">{product.description.split(/\s*[-–—]\s*/)[0]}</p>
               <button
                 onClick={() => navigate(`/product/${product.id}`)} // Navigasi ke halaman detail produk
-                className="mt-4 px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition"
+                className="mt-4 px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition cursor-pointer"
               >
                 Read Now
               </button>

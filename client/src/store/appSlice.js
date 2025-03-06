@@ -114,7 +114,6 @@ export const getProductsThunk = (params = {}) => async (dispatch) => {
 export const getCartsThunk = (userId) => async (dispatch) => {
   try {
     if (!userId) {
-      console.log("User ID tidak tersedia");
       return;
     }
 
@@ -129,7 +128,7 @@ export const getCartsThunk = (userId) => async (dispatch) => {
 
     dispatch(onFetchCartsSuccess(data));
   } catch (error) {
-    console.log("Error fetching carts:", error);
+    console.log(error);
   }
 };
 
@@ -174,7 +173,7 @@ export const addToCartThunk = (userId, product) => async (dispatch) => {
       toast.success("Produk ditambahkan ke keranjang!");
     }
   } catch (error) {
-    console.log("Error adding to cart:", error);
+    console.log(error);
   }
 };
 
@@ -196,7 +195,7 @@ export const updateCartQuantityThunk = (cartId, newQuantity) => async (dispatch)
     await updateDoc(cartRef, { quantity: newQuantity });
 
     dispatch(updateCartQuantitySuccess({ id: cartId, quantity: newQuantity }));
-    toast.info("Produk diperbarui");
+    toast.info("Jumlah Produk diperbarui");
   } catch (error) {
     console.log(error);
   }

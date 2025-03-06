@@ -8,7 +8,6 @@ import {
 } from "../../store/appSlice";
 import { AuthContext } from "../Auth";
 import { MinusCircle, PlusCircle, ShoppingCart, Trash2 } from "lucide-react";
-import Footer from "../../components/user/Footer";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -40,13 +39,12 @@ export default function CartPage() {
 
   const handleCheckout = () => {
     const phoneNumber = "6288233986132";
-  
+
     // Ambil email customer dari userLogin
     const customerName = userLogin?.email || "Customer";
-    
-  
+
     // Format pesanan
-    let message = `Hallo Fidel Phone, Saya ${customerName} ingin memesan:\n`;
+    let message = `Hallo Fidel Phone, Saya ${customerName} ingin memesan:\n\n`;
     carts.forEach((cart, index) => {
       message += `${index + 1}. ${cart.name} - ${
         cart.quantity
@@ -54,19 +52,18 @@ export default function CartPage() {
         cart.price * cart.quantity
       ).toLocaleString("id-ID")}\n`;
     });
-  
+
     message += `\nTotal: Rp ${totalPrice.toLocaleString("id-ID")}`;
-    
+
     // Encode pesan agar sesuai format URL
     const encodedMessage = encodeURIComponent(message);
-    
+
     // Buat URL WhatsApp
     const waUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-  
+
     // Redirect ke WhatsApp
     window.open(waUrl, "_blank");
   };
-  
 
   return (
     <>
@@ -101,11 +98,17 @@ export default function CartPage() {
 
                   {/* Kontrol Jumlah */}
                   <div className="flex items-center gap-3 mt-4 md:mt-0">
-                    <button onClick={() => handleDecreaseQuantity(cart)}>
+                    <button
+                      onClick={() => handleDecreaseQuantity(cart)}
+                      className="cursor-pointer"
+                    >
                       <MinusCircle color="gray" />
                     </button>
-                    <span className="font-semibold">{cart.quantity}</span>
-                    <button onClick={() => handleIncreaseQuantity(cart)}>
+                    <span className="font-semibold">{cart.quantity} </span>
+                    <button
+                      onClick={() => handleIncreaseQuantity(cart)}
+                      className="cursor-pointer"
+                    >
                       <PlusCircle color="gray" />
                     </button>
                   </div>
@@ -118,7 +121,7 @@ export default function CartPage() {
                     <button
                       onClick={() => dispatch(removeFromCartThunk(cart.id))}
                     >
-                      <div className="bg-red-500 p-2 rounded-full">
+                      <div className="bg-red-500 p-2 rounded-full cursor-pointer">
                         <Trash2 size={20} color="white" />
                       </div>
                     </button>
@@ -145,7 +148,7 @@ export default function CartPage() {
               </div>
               <button
                 onClick={handleCheckout}
-                className="mt-6 w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                className="mt-6 w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
               >
                 Lanjutkan ke Pembayaran
               </button>

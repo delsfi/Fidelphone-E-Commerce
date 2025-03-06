@@ -6,16 +6,11 @@ import UserNavbar from "../../components/user/UserNavbar";
 import Footer from "../../components/user/Footer";
 
 export default function RootLayout() {
-  const { userLogin, role, loading } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { loading } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!loading) { // Tunggu Firebase selesai memuat user
-      if (role === "admin" || role === "superadmin") {
-        navigate("/admin");
-      }
-    }
-  }, [role, loading, navigate]);
+    // Tunggu Firebase selesai loading sebelum render layout
+  }, [loading]);
 
   return (
     <>

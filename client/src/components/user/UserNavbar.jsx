@@ -85,7 +85,7 @@ export default function UserNavbar() {
           <ul className="hidden md:flex items-center gap-6">
             <li>
               <button
-                className="text-sm font-medium hover:text-blue-600 transition"
+                className="text-sm font-medium hover:text-blue-600 transition cursor-pointer"
                 onClick={() => navigate("/products")}
               >
                 Product
@@ -93,7 +93,7 @@ export default function UserNavbar() {
             </li>
             <li>
               <button
-                className="text-sm font-medium hover:text-blue-600 transition"
+                className="text-sm font-medium hover:text-blue-600 transition cursor-pointer"
                 onClick={() => navigate("/about")}
               >
                 About
@@ -107,7 +107,7 @@ export default function UserNavbar() {
           <form onSubmit={handleSearch} className="relative">
             <input
               type="text"
-              placeholder="Cari..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -115,7 +115,7 @@ export default function UserNavbar() {
             <button type="submit">
               <Search
                 size={18}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
               />
             </button>
           </form>
@@ -124,7 +124,7 @@ export default function UserNavbar() {
           <button className="relative" onClick={() => navigate("/cart")}>
             <ShoppingCart
               size={28}
-              className={stateContext.theme ? "text-slate-700" : "text-white"}
+              className={stateContext.theme ? "text-slate-700 cursor-pointer" : "text-white"}
             />
             {totalCartItems > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
@@ -177,13 +177,13 @@ export default function UserNavbar() {
           )}
 
           {/* Tombol Tema */}
-          <button onClick={stateContext.changeTheme} className="p-1">
+          {/* <button onClick={stateContext.changeTheme} className="p-1">
             {stateContext.theme ? (
               <Sun size={28} className="text-slate-700" />
             ) : (
               <Moon size={28} className="text-white" />
             )}
-          </button>
+          </button> */}
         </div>
       </div>
 

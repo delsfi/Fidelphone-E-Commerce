@@ -6,7 +6,6 @@ import AdminSidebar from "../../components/admin/AdminSidebar";
 import { AuthContext } from "../Auth";
 
 export default function AdminLayout() {
-
   const navigate = useNavigate();
   // Ambil data dari AuthContext
   const {
@@ -26,7 +25,6 @@ export default function AdminLayout() {
       navigate("/");
     }
   }, [role]);
-  
 
   return (
     <>

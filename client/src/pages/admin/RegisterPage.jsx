@@ -221,7 +221,7 @@ export default function RegisterPage() {
             Already have an account?{" "}
             <span
               className="text-slate-500 hover:underline cursor-pointer"
-              onClick={() => navigate("/admin/login")}
+              onClick={() => navigate("/login")}
             >
               Sign in
             </span>
