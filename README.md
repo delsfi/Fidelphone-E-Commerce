@@ -25,3 +25,9 @@ Fidel Phone E-Commerce is a web-based platform for buying and selling mobile pho
 Here are some UI previews of Fidel Phone E-Commerce:  
 
 ![Homepage](./image/homepage.png)
+![productpage](./image/productpage.png)
+![aboutpage](./image/aboutpage.png)
+![loginpage](./image/loginpage.png)
+![registerpage](./image/registerpage.png)
+![cartpage](./image/cartpage.png)
+![adminpage](./image/adminpage.png)
